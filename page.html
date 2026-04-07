@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #f9f3e6;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 214, 102, 0.14), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(110, 179, 255, 0.14), transparent 26%),
+        linear-gradient(135deg, #151b24, #1a2533 45%, #151f2b);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .card {
+      width: min(760px, calc(100% - 32px));
+      background: rgba(12, 16, 22, 0.72);
+      border: 1px solid rgba(255, 214, 102, 0.35);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 24px 44px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      transform-style: preserve-3d;
+      transition: transform 260ms ease;
+    }
+    h1 { margin-top: 0; color: #ffd666; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .tile {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 214, 102, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .tile:hover { transform: translateY(-4px); border-color: rgba(255, 214, 102, 0.55); }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      text-decoration: none;
+      color: #2b1d00;
+      font-weight: 800;
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #ffe6a0, #ffc85c);
+      border: 1px solid #ffcf57;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" id="card">
+    <h1 id="title">Page</h1>
+    <p>Use this as your main project page with timeline, sections, or overview.</p>
+    <section class="grid">
+      <article class="tile">Project goal and theme</article>
+      <article class="tile">Major milestones</article>
+      <article class="tile">Key visuals and notes</article>
+    </section>
+    <div class="nav">
+      <a class="btn" href="index.html">Back Home</a>
+      <a class="btn" href="bios.html">Go to Bios</a>
+      <a class="btn" href="work-cited.html">Go to Work Cited</a>
+    </div>
+  </main>
+  <script>
+    const card = document.getElementById("card");
+    const title = document.getElementById("title");
+    const text = "Project Page";
+    let i = 0;
+    title.textContent = "";
+    (function type() {
+      title.textContent = text.slice(0, i);
+      i += 1;
+      if (i <= text.length) setTimeout(type, 65);
+    })();
+
+    document.addEventListener("mousemove", (event) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 8;
+      const y = (event.clientY / window.innerHeight - 0.5) * 8;
+      card.style.transform = "rotateY(" + x + "deg) rotateX(" + (-y) + "deg)";
+    });
+  </script>
+</body>
+</html>

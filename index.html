@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Homepage</title>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; width: 100%; height: 100%; }
+    body { background: #000; overflow: hidden; font-family: Arial, sans-serif; }
+    .hero { position: relative; width: 100%; height: 100%; perspective: 1200px; }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 22%, rgba(255, 214, 102, 0.3), transparent 34%),
+        radial-gradient(circle at 92% 18%, rgba(119, 188, 255, 0.22), transparent 33%),
+        linear-gradient(165deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+      animation: pulseGlow 7s ease-in-out infinite alternate;
+    }
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.03);
+      transition: transform 300ms ease;
+      filter: saturate(1.08) contrast(1.04);
+    }
+    .hero-title {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      margin: 0;
+      z-index: 4;
+      color: #fff3d1;
+      font-size: clamp(22px, 3.8vw, 36px);
+      letter-spacing: 1px;
+      text-shadow: 0 8px 26px rgba(0, 0, 0, 0.65);
+    }
+    .floors {
+      position: absolute;
+      top: 32%;
+      left: 22%;
+      width: 56%;
+      height: 42%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 3;
+    }
+    .floor {
+      position: relative;
+      border-top: 4px solid rgba(255, 214, 102, 0.95);
+      border-bottom: 4px solid rgba(255, 214, 102, 0.95);
+      background: rgba(0, 0, 0, 0.25);
+      box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.35);
+      height: 31%;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+    .floor-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffd666;
+      font-size: 16px;
+      font-weight: 800;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
+      letter-spacing: 0.6px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 2px solid rgba(255, 214, 102, 0.95);
+      border-radius: 6px;
+      padding: 4px 8px;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .floor-label:hover { transform: translate(-50%, -50%) scale(1.04); background: rgba(255, 214, 102, 0.2); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.55); }
+    .floor-label:active { transform: translate(-50%, -50%) scale(0.98); }
+    .floor-label.active { color: #2b1d00; background: linear-gradient(135deg, #ffe6a0 0%, #ffd666 45%, #ffbf3f 100%); border-color: #ffcf57; box-shadow: 0 0 0 3px rgba(255, 214, 102, 0.35), 0 12px 24px rgba(0, 0, 0, 0.6); }
+    .floor.active { background: rgba(255, 214, 102, 0.2); box-shadow: inset 0 0 0 2px rgba(255, 214, 102, 0.45); transform: scale(1.01); }
+    .status-chip {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      z-index: 4;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff3d1;
+      background: rgba(0, 0, 0, 0.58);
+      border: 1px solid rgba(255, 214, 102, 0.65);
+      border-radius: 999px;
+      padding: 8px 14px;
+      backdrop-filter: blur(3px);
+    }
+    .quick-links { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 4; }
+    .quick-link {
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: #2b1d00;
+      background: linear-gradient(135deg, #ffe6a0 0%, #ffd666 45%, #ffbf3f 100%);
+      border: 2px solid #ffcf57;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .quick-link:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(0, 0, 0, 0.45); }
+    .quick-link::after {
+      content: "";
+      position: absolute;
+      top: -120%;
+      left: -45%;
+      width: 40%;
+      height: 300%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(20deg);
+      transition: left 420ms ease;
+    }
+    .quick-link:hover::after { left: 120%; }
+    .cursor-glow {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(circle, rgba(255, 214, 102, 0.22) 0%, rgba(255, 214, 102, 0.08) 34%, transparent 70%);
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+    }
+    .particles { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 239, 186, 0.56);
+      box-shadow: 0 0 12px rgba(255, 214, 102, 0.8);
+      animation: floatParticle linear forwards;
+    }
+    @keyframes floatParticle {
+      from { transform: translateY(0) translateX(0); opacity: 0; }
+      18% { opacity: 1; }
+      to { transform: translateY(-140px) translateX(30px); opacity: 0; }
+    }
+    @keyframes pulseGlow { from { opacity: 0.72; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <img class="hero-image" src="schoolgood.jpg" alt="School building">
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="particles" id="particles"></div>
+    <h1 class="hero-title" id="hero-title">Made For Failure</h1>
+    <nav class="quick-links" aria-label="Extra pages">
+      <a class="quick-link" href="page.html">Page</a>
+      <a class="quick-link" href="bios.html">Bios</a>
+      <a class="quick-link" href="work-cited.html">Work Cited</a>
+    </nav>
+    <div class="floors">
+      <div class="floor" data-floor="Upper Class" data-id="3"><button class="floor-label" type="button">Upper Class</button></div>
+      <div class="floor" data-floor="Middle Class" data-id="2"><button class="floor-label" type="button">Middle Class</button></div>
+      <div class="floor" data-floor="Low Class" data-id="1"><button class="floor-label" type="button">Low Class</button></div>
+    </div>
+    <div class="status-chip" id="status-chip">Click a floor to open wall page</div>
+  </div>
+  <script>
+    const floorRows = document.querySelectorAll(".floor");
+    const statusChip = document.getElementById("status-chip");
+    const hero = document.querySelector(".hero");
+    const heroImage = document.querySelector(".hero-image");
+    const particles = document.getElementById("particles");
+    const heroTitle = document.getElementById("hero-title");
+    const cursorGlow = document.getElementById("cursor-glow");
+
+    function addRipple(target, event) {
+      const ripple = document.createElement("span");
+      const rect = target.getBoundingClientRect();
+      ripple.style.position = "absolute";
+      ripple.style.width = "14px";
+      ripple.style.height = "14px";
+      ripple.style.left = (event.clientX - rect.left - 7) + "px";
+      ripple.style.top = (event.clientY - rect.top - 7) + "px";
+      ripple.style.borderRadius = "999px";
+      ripple.style.background = "rgba(255,255,255,0.48)";
+      ripple.style.pointerEvents = "none";
+      ripple.style.transition = "transform 420ms ease, opacity 420ms ease";
+      ripple.style.transform = "scale(1)";
+      target.appendChild(ripple);
+      requestAnimationFrame(() => {
+        ripple.style.transform = "scale(11)";
+        ripple.style.opacity = "0";
+      });
+      setTimeout(() => ripple.remove(), 450);
+    }
+
+    function setActiveFloor(targetFloor) {
+      floorRows.forEach((row) => {
+        const button = row.querySelector(".floor-label");
+        const isActive = row === targetFloor;
+        row.classList.toggle("active", isActive);
+        button.classList.toggle("active", isActive);
+      });
+      const floorName = targetFloor.dataset.floor;
+      statusChip.textContent = "Opening " + floorName + "...";
+      const floorId = targetFloor.dataset.id;
+      window.location.href = "wall.html?floor=" + encodeURIComponent(floorId);
+    }
+
+    floorRows.forEach((row) => {
+      const button = row.querySelector(".floor-label");
+      button.addEventListener("click", (event) => {
+        addRipple(button, event);
+        setActiveFloor(row);
+      });
+      button.addEventListener("mouseenter", () => {
+        heroImage.style.transform = "scale(1.06)";
+      });
+      button.addEventListener("mouseleave", () => {
+        heroImage.style.transform = "scale(1.03)";
+      });
+    });
+
+    document.querySelectorAll(".quick-link").forEach((link) => {
+      link.addEventListener("click", (event) => addRipple(link, event));
+    });
+
+    hero.addEventListener("mousemove", (event) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 10;
+      const y = (event.clientY / window.innerHeight - 0.5) * 8;
+      heroImage.style.transform = "scale(1.03) translate(" + x + "px," + y + "px)";
+      cursorGlow.style.left = event.clientX + "px";
+      cursorGlow.style.top = event.clientY + "px";
+    });
+    hero.addEventListener("mouseleave", () => {
+      heroImage.style.transform = "scale(1.03)";
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "1") setActiveFloor(floorRows[2]);
+      if (event.key === "2") setActiveFloor(floorRows[1]);
+      if (event.key === "3") setActiveFloor(floorRows[0]);
+    });
+
+    const titleText = "Made For Failure";
+    heroTitle.textContent = "";
+    let index = 0;
+    (function typeTitle() {
+      heroTitle.textContent = titleText.slice(0, index);
+      index += 1;
+      if (index <= titleText.length) setTimeout(typeTitle, 70);
+    })();
+
+    setInterval(() => {
+      const dot = document.createElement("span");
+      dot.className = "particle";
+      dot.style.left = Math.random() * 100 + "%";
+      dot.style.top = 70 + Math.random() * 28 + "%";
+      dot.style.animationDuration = (2.8 + Math.random() * 2) + "s";
+      particles.appendChild(dot);
+      setTimeout(() => dot.remove(), 5000);
+    }, 260);
+  </script>
+</body>
+</html>
