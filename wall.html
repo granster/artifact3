@@ -88,31 +88,71 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const floorId = params.get("floor") || "2";
+    const floorData = {
+      "1": {
+        name: "Low Class",
+        theme: "Access and Opportunity",
+        facts: [
+          "In Never Let Me Go, clones born and raised outside of Hailsham symbolize the lower social class because they are denied meaningful education, identity development, and hope for an alternative future.",
+          "Unlike Hailsham students who are encouraged to create art and reflect on their emotions, clones in other institutions are raised in stark environments focused only on their function as organ donors.",
+          "Without opportunities for creative expression or critical thinking, they are treated as disposable and never shown to have individuality beyond a predetermined biological role.",
+          "This lack of education has major consequences: they are not equipped to question the system that exploits them, so they remain compliant and passive, accepting their fate without resistance.",
+          "The contrast with Hailsham shows how even limited educational access can produce very different lived experiences, and how education can function as either empowerment or control depending on who can access it.",
+          "This mirrors real-world inequality, where underfunded schools often deny students access to resources for intellectual and creative growth, reinforcing barriers to upward mobility.",
+          "The lower-tier clones reveal a society where withholding education preserves power and predetermines not only success, but also a person's sense of self and worth.",
+          "Graph source: https://www.pewresearch.org/social-trends/2012/09/10/a-third-of-americans-now-say-they-are-in-the-lower-classes/"
+        ]
+      },
+      "2": {
+        name: "Middle Class",
+        theme: "Mobility and Pressure",
+        facts: [
+          "In Never Let Me Go, the clones raised at Hailsham serve as a compelling metaphor for the middle class. Unlike clones in stark, utilitarian facilities who are treated purely as spare parts, Hailsham students are given a rich liberal arts education focused on art, writing, and reflection.",
+          "However, this privilege is ultimately a gilded cage. Despite cultural enrichment and emotional development, Hailsham students still face the same predetermined fate as organ donors.",
+          "This creates a cruel irony: they gain self-awareness and the language to understand what it means to be human, but they are never given power to challenge the system exploiting them.",
+          "Their education functions less as liberation and more as pacification. It keeps them intellectually engaged while conditioning them to remain compliant and fulfill expected social roles.",
+          "This dynamic parallels middle-class education in the real world, where students are often directed toward higher education with promises of mobility, yet many become constrained by student debt and rigid workforce demands.",
+          "Hailsham also illustrates how a slight educational advantage can create a false sense of exceptionalism, seen in rumors like deferrals for true love, which maintain hope without changing structural reality.",
+          "Ultimately, Hailsham masks dehumanization with culture and demonstrates how middle-tier positioning can produce not freedom, but painful awareness of systemic entrapment."
+        ]
+      },
+      "3": {
+        name: "Upper Class",
+        theme: "Privilege and Protection",
+        facts: [
+          "Within the world of Never Let Me Go, the \"ordinary\" humans can be seen as a representation of the upper class in modern society. They are treated as fully autonomous people and are able to operate with a normal range of freedom.",
+          "Unlike the clones, they can choose their life paths and also benefit directly from the clone system by receiving organs when necessary. This stands in direct contrast to clones whose futures are largely predetermined.",
+          "Even when clones experience better conditions, such as at Hailsham, they are still confined to the same narrow social roles of caretaker or organ donor.",
+          "This dynamic reflects upper-class advantage in real-world education: those from wealthier backgrounds are more likely to access stronger educational opportunities, which in turn expands life outcomes and social mobility.",
+          "The general complacency of ordinary humans also parallels upper-class complacency. Although they may not understand every detail of the system, they appear aware of its overall structure and do not act to change it.",
+          "They may not be overtly malicious, but they remain apathetic because they benefit from the system and have more to lose from reform.",
+          "Thus, while ordinary humans play a smaller narrative role, their perspective reinforces the film's representation of rigid social mobility maintained by educational inequality."
+        ]
+      }
+    };
 
     const title = document.getElementById("floor-title");
     const subtitle = document.getElementById("floor-subtitle");
     const facts = document.getElementById("floor-facts");
     const card = document.querySelector(".card");
 
-    async function loadFloor() {
-      try {
-        const response = await fetch("/api/floors/" + encodeURIComponent(floorId));
-        if (!response.ok) throw new Error("Could not load floor data");
-        const floor = await response.json();
-
-        title.textContent = floor.name + " Wall";
-        subtitle.textContent = floor.theme + " - live from Node API";
-        facts.innerHTML = "";
-        floor.facts.forEach((line) => {
-          const item = document.createElement("li");
-          item.textContent = line;
-          facts.appendChild(item);
-        });
-      } catch (error) {
+    function loadFloor() {
+      const floor = floorData[floorId];
+      if (!floor) {
         title.textContent = "Floor Not Found";
-        subtitle.textContent = "Could not fetch this floor from the server.";
-        facts.innerHTML = "<li>Make sure the Node server is running on localhost:3000.</li>";
+        subtitle.textContent = "Choose a valid class from the homepage.";
+        facts.innerHTML = "<li>No details available for this selection.</li>";
+        return;
       }
+
+      title.textContent = floor.name + " Wall";
+      subtitle.textContent = floor.theme;
+      facts.innerHTML = "";
+      floor.facts.forEach((line) => {
+        const item = document.createElement("li");
+        item.textContent = line;
+        facts.appendChild(item);
+      });
     }
 
     document.addEventListener("mousemove", (event) => {

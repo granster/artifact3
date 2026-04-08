@@ -16,11 +16,12 @@
         radial-gradient(circle at 90% 20%, rgba(110, 179, 255, 0.14), transparent 26%),
         linear-gradient(135deg, #151b24, #1a2533 45%, #151f2b);
       display: grid;
-      place-items: center;
-      overflow: hidden;
+      place-items: start center;
+      overflow-y: auto;
+      padding: 22px 0;
     }
     .card {
-      width: min(760px, calc(100% - 32px));
+      width: min(980px, calc(100% - 32px));
       background: rgba(12, 16, 22, 0.72);
       border: 1px solid rgba(255, 214, 102, 0.35);
       border-radius: 16px;
@@ -31,20 +32,23 @@
       transition: transform 260ms ease;
     }
     h1 { margin-top: 0; color: #ffd666; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 12px;
-      margin: 16px 0;
+    h2 {
+      margin: 20px 0 8px;
+      color: #ffe3ae;
+      font-size: 20px;
     }
-    .tile {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 214, 102, 0.2);
-      border-radius: 10px;
-      padding: 12px;
-      transition: transform 200ms ease, border-color 200ms ease;
+    p {
+      line-height: 1.65;
+      color: #f5ead2;
+      margin: 0 0 14px;
     }
-    .tile:hover { transform: translateY(-4px); border-color: rgba(255, 214, 102, 0.55); }
+    .overview-box {
+      background: rgba(255, 214, 102, 0.08);
+      border: 1px solid rgba(255, 214, 102, 0.28);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
     .nav { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn {
       text-decoration: none;
@@ -59,13 +63,17 @@
 </head>
 <body>
   <main class="card" id="card">
-    <h1 id="title">Page</h1>
-    <p>Use this as your main project page with timeline, sections, or overview.</p>
-    <section class="grid">
-      <article class="tile">Project goal and theme</article>
-      <article class="tile">Major milestones</article>
-      <article class="tile">Key visuals and notes</article>
-    </section>
+    <h1 id="title">About</h1>
+    <div class="overview-box">
+      <h2>Overview</h2>
+      <p>This digital exhibition details how educational access creates social class distinctions and predetermines an individual's future life experience in the dystopian environment of <em>Never Let Me Go</em>. Hailsham students are in the middle-class bracket because they are provided with a more well-structured education that concentrates heavily on creative expression and self-development. On the contrary, clones that have been raised outside of Hailsham account for the lowest class and did not receive any meaningful education; they are strictly being trained to be organ donors. This exhibit compares these two groups of clones to upper-class human beings and ultimately shows how the distribution of education creates an environment of control, reinforces social inequality, and hinders upward mobility for all people.</p>
+      <p>This exhibition's goal is to provide information regarding opportunities and results in both fictional and real-world situations created through either providing or withholding access to education. Research shows that socio-economic status still has a major impact on educational outcomes and that children from underprivileged backgrounds have limited access to education. This disadvantage begins before they are even born (American Psychological Association, 2017). By looking at the clones in <em>Never Let Me Go</em>, viewers can see how a lack of access to education limits both the scope of knowledge and the ability for people to develop their own interests and talents, thus highlighting the fundamental connection between education and social inequality.</p>
+    </div>
+    <h2>Purpose, Stance, and Audience</h2>
+    <p>As previously established, the hierarchical treatment and outcomes of individuals and clones within the world of <em>Never Let Me Go</em> acts as an analogous representation of how education access affects the outcomes of certain economic groups within modern society. This exhibit was designed to engage with this discussion and provide practical examples of how education inequality manifests and affects various economic classes. With this analysis, this exhibit aims to make a statement concerning how education access is inherently linked to cyclical economic inequality and advocate for greater education access and standardized quality.</p>
+    <p>Firstly, a foundational understanding of the extent of educational inequality is needed to contextualize the larger topic of discussion. From a larger publication by the Education Law Center, a team of researchers found that roughly one third of all U.S. states provide less funding to schools in high poverty districts compared to those with low poverty rates (Learning Policy Institute). This issue contributes to achievement gaps and creates roadblocks to developing the cognitive and noncognitive skills required for economic mobility. Education access is therefore inherently linked to later life outcomes, with greater access and quality creating more favorable conditions for social mobility.</p>
+    <p>This link between education, social mobility, and the world of <em>Never Let Me Go</em> becomes clear through Hailsham. While clones at Hailsham receive better treatment and more opportunities than clones elsewhere, their fate remains largely predetermined because they can never escape their roles as second-class citizens. In parallel, the middle class in modern society may have opportunities for advancement but still faces structural barriers that prevent full access to wealth and power held by the upper class.</p>
+    <p>Thus, the connection between the dystopian world of <em>Never Let Me Go</em> and the modern world can be seen in rigid social structures that keep groups confined to inherited roles in the hierarchy. This exhibit explores that connection and invites viewers to reflect on how unequal access to education can define life trajectories and maintain inequality.</p>
     <div class="nav">
       <a class="btn" href="index.html">Back Home</a>
       <a class="btn" href="bios.html">Go to Bios</a>
@@ -75,7 +83,7 @@
   <script>
     const card = document.getElementById("card");
     const title = document.getElementById("title");
-    const text = "Project Page";
+    const text = "About";
     let i = 0;
     title.textContent = "";
     (function type() {
