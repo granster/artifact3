@@ -271,6 +271,42 @@
       line-height: 1.5;
       color: #ecdfca;
     }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 0 0 18px;
+    }
+    @media (max-width: 700px) { .gallery { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 460px) { .gallery { grid-template-columns: 1fr; } }
+    .photo-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 216, 153, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+    .photo-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 216, 153, 0.45);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.38);
+    }
+    .photo-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      background: #1a130c;
+    }
+    .photo-caption {
+      padding: 8px 10px 10px;
+      font-size: 12px;
+      color: #e7d9bf;
+      line-height: 1.4;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -286,6 +322,7 @@
     <div class="key-quote" id="key-quote"></div>
     <div class="media-prompt" id="media-prompt"></div>
     <div class="media-grid" id="media-grid"></div>
+    <div class="gallery" id="gallery"></div>
 
     <div class="fact-grid" id="fact-grid"></div>
 
@@ -324,6 +361,11 @@
           compare: [
             "Fiction: Donor clones are raised for extraction, not development.",
             "Reality: Underfunded schools reduce upward mobility and long-term agency."
+          ],
+          photos: [
+            { src: "images/lowerclass/bleakhospital.png", caption: "Bleak donor facility" },
+            { src: "images/lowerclass/underfunded school.png", caption: "Underfunded school" },
+            { src: "images/lowerclass/chart.png", caption: "Education inequality chart" }
           ]
         },
         facts: [
@@ -358,6 +400,12 @@
           compare: [
             "Fiction: Hailsham offers growth, but no structural escape.",
             "Reality: Credentials increase options, but debt and labor structures limit mobility."
+          ],
+          photos: [
+            { src: "images/middleclass/hailsham.png", caption: "Hailsham art & classroom" },
+            { src: "images/middleclass/falsehope.png", caption: "False hope — deferrals scene" },
+            { src: "images/middleclass/quote.png", caption: "Key quote card" },
+            { src: "images/middleclass/graph.png", caption: "Degree attainment vs debt" }
           ]
         },
         facts: [
@@ -392,6 +440,11 @@
           compare: [
             "Fiction: Ordinary humans benefit from donor structures without personal cost.",
             "Reality: Elite educational pipelines and inherited capital preserve class position."
+          ],
+          photos: [
+            { src: "images/upperclasss/polishedhospital.png", caption: "Polished hospital / elite life" },
+            { src: "images/upperclasss/chart.png", caption: "Beneficiaries vs donors" },
+            { src: "images/upperclasss/graph.png", caption: "Social mobility — class persistence" }
           ]
         },
         facts: [
@@ -412,6 +465,7 @@
     const keyQuoteEl = document.getElementById("key-quote");
     const mediaPromptEl = document.getElementById("media-prompt");
     const mediaGridEl = document.getElementById("media-grid");
+    const galleryEl = document.getElementById("gallery");
     const factGrid = document.getElementById("fact-grid");
 
     function loadFloor() {
@@ -449,6 +503,13 @@
             floor.media.compare.map((c) => "<div class='compare-item'>" + c + "</div>").join("") +
           "</div>" +
         "</section>";
+
+      const photos = (floor.media && floor.media.photos) || [];
+      galleryEl.innerHTML = photos.map((p) =>
+        "<figure class='photo-card'><img src='" + encodeURI(p.src) + "' alt='" + p.caption + "' loading='lazy'>" +
+        "<figcaption class='photo-caption'>" + p.caption + "</figcaption></figure>"
+      ).join("");
+      galleryEl.style.display = photos.length ? "grid" : "none";
 
       factGrid.innerHTML = "";
       floor.facts.forEach((fact, idx) => {
