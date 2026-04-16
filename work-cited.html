@@ -3,115 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work Cited</title>
+  <title>Works Cited — Made For Failure</title>
   <style>
+    :root { color-scheme: dark; }
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
       font-family: Arial, sans-serif;
       color: #fff5e7;
       background:
         radial-gradient(circle at 18% 10%, rgba(255, 214, 102, 0.18), transparent 28%),
         radial-gradient(circle at 88% 18%, rgba(255, 171, 92, 0.14), transparent 26%),
         linear-gradient(140deg, #221b17, #2e241d 45%, #1f1915);
+      padding: 32px 0 50px;
+      overflow-y: auto;
+    }
+    .container {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
     }
     .card {
-      width: min(860px, calc(100% - 32px));
-      background: rgba(0, 0, 0, 0.42);
+      background: rgba(0, 0, 0, 0.44);
       border: 1px solid rgba(255, 214, 102, 0.35);
       border-radius: 16px;
-      padding: 20px;
+      padding: 28px;
       box-shadow: 0 20px 36px rgba(0, 0, 0, 0.42);
+      margin-bottom: 18px;
     }
-    h1 { margin-top: 0; color: #ffd666; }
-    ol { line-height: 1.55; }
-    li {
-      margin-bottom: 10px;
+    h1 { margin-top: 0; color: #ffd666; font-size: clamp(24px, 4vw, 36px); }
+    h2 {
+      color: #ffe3ae;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 22px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 214, 102, 0.22);
+    }
+    .source-entry {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 214, 102, 0.16);
       border-radius: 8px;
-      padding: 8px 10px;
-      transition: transform 200ms ease;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      line-height: 1.65;
+      font-size: 14.5px;
+      color: #f0e8d8;
+      transition: transform 200ms ease, border-color 200ms ease;
     }
-    li:hover { transform: translateX(4px); }
+    .source-entry:hover {
+      transform: translateX(4px);
+      border-color: rgba(255, 214, 102, 0.35);
+    }
+    .source-entry .doi {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      color: #b8a890;
+    }
+    .source-entry .doi a { color: #ffd666; }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .tag.primary { background: rgba(255, 214, 102, 0.2); color: #ffd666; border: 1px solid rgba(255, 214, 102, 0.4); }
+    .tag.secondary { background: rgba(119, 188, 255, 0.12); color: #77bcff; border: 1px solid rgba(119, 188, 255, 0.3); }
+    .tag.data { background: rgba(50, 200, 100, 0.1); color: #80e890; border: 1px solid rgba(80, 180, 80, 0.3); }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
     .btn {
       text-decoration: none;
       color: #2b1d00;
       background: linear-gradient(135deg, #ffe6a0, #ffc85c);
       border: 1px solid #ffcf57;
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 13px;
       font-weight: 800;
+      font-size: 14px;
       display: inline-block;
+      transition: transform 0.2s ease;
     }
+    .btn:hover { transform: translateY(-2px); }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1 id="title">Work Cited</h1>
-    <ol id="list">
-      <li>School image source, publication date, URL.</li>
-      <li>Books, articles, or websites used for research.</li>
-      <li>Any AI/tool references used in project creation.</li>
-    </ol>
-    <a class="btn" href="index.html">Back Home</a>
-  </main>
+  <div class="container">
+    <div class="card">
+      <h1 id="title">Works Cited &amp; Sources</h1>
+
+      <h2>Primary Source</h2>
+
+      <div class="source-entry">
+        <span class="tag primary">Primary</span>
+        Ishiguro, Kazuo. <em>Never Let Me Go</em>. Alfred A. Knopf, 2005.
+      </div>
+
+      <h2>Scholarly Articles</h2>
+
+      <div class="source-entry">
+        <span class="tag primary">Peer-Reviewed</span>
+        Snaza, Nathan. "The Failure of Humanizing Education in Kazuo Ishiguro's <em>Never Let Me Go</em>." <em>Lit: Literature Interpretation Theory</em>, vol. 26, no. 3, 3 July 2015, pp. 215–234.
+        <span class="doi">DOI: <a href="https://doi.org/10.1080/10436928.2015.1062344" target="_blank" rel="noopener">https://doi.org/10.1080/10436928.2015.1062344</a></span>
+      </div>
+
+      <div class="source-entry">
+        <span class="tag secondary">Research</span>
+        Chetty, Raj, et al. "The Association Between Income and Life Expectancy in the United States, 2001–2014." <em>JAMA</em>, vol. 315, no. 16, 26 Apr. 2016, pp. 1750–1766.
+        <span class="doi">DOI: <a href="https://doi.org/10.1001/jama.2016.4226" target="_blank" rel="noopener">https://doi.org/10.1001/jama.2016.4226</a></span>
+      </div>
+
+      <h2>Educational Policy &amp; Data</h2>
+
+      <div class="source-entry">
+        <span class="tag data">Data</span>
+        American Psychological Association. "Education and Socioeconomic Status." <em>APA</em>, 2017.
+        <span class="doi"><a href="https://www.apa.org/pi/ses/resources/publications/education" target="_blank" rel="noopener">https://www.apa.org/pi/ses/resources/publications/education</a></span>
+      </div>
+
+      <div class="source-entry">
+        <span class="tag data">Policy Report</span>
+        Learning Policy Institute. "Funding Gaps: An Analysis of School Funding Equity across the U.S. and within Each State." <em>Education Law Center</em>.
+        <span class="doi"><a href="https://learningpolicyinstitute.org/" target="_blank" rel="noopener">https://learningpolicyinstitute.org/</a></span>
+      </div>
+
+      <div class="source-entry">
+        <span class="tag data">Data</span>
+        National Center for Education Statistics (NCES). "Public School Expenditures." U.S. Department of Education, 2020–21.
+        <span class="doi"><a href="https://nces.ed.gov/fastfacts/display.asp?id=66" target="_blank" rel="noopener">https://nces.ed.gov/fastfacts/display.asp?id=66</a></span>
+      </div>
+
+      <div class="source-entry">
+        <span class="tag data">Data</span>
+        Pew Research Center. "A Third of Americans Now Say They Are in the Lower Classes." Pew Research Center Social &amp; Demographic Trends, 10 Sept. 2012.
+        <span class="doi"><a href="https://www.pewresearch.org/social-trends/2012/09/10/a-third-of-americans-now-say-they-are-in-the-lower-classes/" target="_blank" rel="noopener">https://www.pewresearch.org/social-trends/2012/09/10/...</a></span>
+      </div>
+
+      <div class="source-entry">
+        <span class="tag secondary">Research</span>
+        Brookings Institution. "Intergenerational Economic Mobility in the United States." <em>Brookings</em>.
+        <span class="doi"><a href="https://www.brookings.edu/research/" target="_blank" rel="noopener">https://www.brookings.edu/research/</a></span>
+      </div>
+
+      <h2>Organ Transplant &amp; Medical Inequality</h2>
+
+      <div class="source-entry">
+        <span class="tag data">Data</span>
+        United Network for Organ Sharing (UNOS). "Transplant Trends." <em>UNOS</em>, 2023.
+        <span class="doi"><a href="https://unos.org/data/" target="_blank" rel="noopener">https://unos.org/data/</a></span>
+      </div>
+
+      <div class="source-entry">
+        <span class="tag secondary">Research</span>
+        World Health Organization. "Human Organ and Tissue Transplantation." <em>WHO</em>.
+        <span class="doi"><a href="https://www.who.int/health-topics/transplantation" target="_blank" rel="noopener">https://www.who.int/health-topics/transplantation</a></span>
+      </div>
+
+      <h2>Website &amp; Media Credits</h2>
+
+      <div class="source-entry">
+        <span class="tag secondary">Image</span>
+        School building hero image: <em>schoolgood.jpg</em> — original photograph used for educational, non-commercial purposes.
+      </div>
+
+      <div class="source-entry">
+        <span class="tag secondary">Tool</span>
+        Website developed using HTML, CSS, and JavaScript. Charts generated using Chart.js (MIT license).
+        <span class="doi"><a href="https://www.chartjs.org/" target="_blank" rel="noopener">https://www.chartjs.org/</a></span>
+      </div>
+
+      <div class="nav">
+        <a class="btn" href="index.html">Back Home</a>
+        <a class="btn" href="page.html">About</a>
+      </div>
+    </div>
+  </div>
+
   <script>
     const title = document.getElementById("title");
-    const text = "Work Cited & Sources";
+    const text = "Works Cited & Sources";
     let p = 0;
     title.textContent = "";
     (function animateTitle() {
       title.textContent = text.slice(0, p);
       p += 1;
-      if (p <= text.length) setTimeout(animateTitle, 65);
+      if (p <= text.length) setTimeout(animateTitle, 55);
     })();
 
-    document.querySelectorAll("#list li").forEach((item, idx) => {
+    document.querySelectorAll(".source-entry").forEach((item, idx) => {
       item.style.opacity = "0";
-      item.style.transform = "translateY(12px)";
+      item.style.transform = "translateY(10px)";
       setTimeout(() => {
-        item.style.transition = "opacity 420ms ease, transform 420ms ease";
+        item.style.transition = "opacity 400ms ease, transform 400ms ease";
         item.style.opacity = "1";
         item.style.transform = "translateY(0)";
-      }, 130 * (idx + 1));
+      }, 100 * (idx + 1));
     });
   </script>
-</body>
-</html>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work Cited</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: Arial, sans-serif;
-      background: #2a2220;
-      color: #fff5e7;
-    }
-    .card {
-      width: min(700px, calc(100% - 32px));
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 214, 102, 0.45);
-      border-radius: 12px;
-      padding: 20px;
-    }
-    a { color: #ffd666; }
-  </style>
-</head>
-<body>
-  <main class="card">
-    <h1>Work Cited</h1>
-    <p>This is your Work Cited section. Add sources and references here.</p>
-    <a href="index.html">Back to homepage</a>
-  </main>
 </body>
 </html>

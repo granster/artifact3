@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harvested — Made For Failure</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #f5ead2;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(180, 30, 30, 0.22), transparent 32%),
+        radial-gradient(circle at 88% 20%, rgba(255, 214, 102, 0.10), transparent 28%),
+        linear-gradient(135deg, #130a0a, #1c1010 50%, #130d0d);
+      overflow-y: auto;
+      padding: 28px 0 50px;
+    }
+    .container {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(110, 15, 15, 0.65), rgba(8, 5, 5, 0.82));
+      border: 1px solid rgba(190, 60, 60, 0.5);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 50%, rgba(180, 30, 30, 0.22), transparent 60%);
+      pointer-events: none;
+    }
+    h1 {
+      margin: 0 0 10px;
+      color: #ff7a7a;
+      font-size: clamp(28px, 4.5vw, 44px);
+      letter-spacing: 0.5px;
+      text-shadow: 0 4px 22px rgba(180, 30, 30, 0.55);
+    }
+    .hero-sub {
+      color: #f0ccc4;
+      font-size: 15px;
+      margin: 0;
+      line-height: 1.65;
+      max-width: 760px;
+    }
+    .section-card {
+      background: rgba(10, 6, 6, 0.74);
+      border: 1px solid rgba(255, 214, 102, 0.22);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(3px);
+    }
+    .section-card.red-accent { border-color: rgba(190, 60, 60, 0.38); }
+    h2 { margin: 0 0 14px; color: #ffd666; font-size: 20px; }
+    h2.red { color: #ff7a7a; }
+    p { line-height: 1.72; margin: 0 0 14px; color: #f0e8d8; }
+    p:last-child { margin-bottom: 0; }
+    em { color: #ffe3ae; font-style: italic; }
+    blockquote {
+      margin: 16px 0;
+      padding: 16px 20px;
+      border-left: 4px solid #ff7a7a;
+      background: rgba(180, 30, 30, 0.12);
+      border-radius: 0 10px 10px 0;
+      font-style: italic;
+      color: #ffd0c8;
+      line-height: 1.72;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: 10px;
+      font-style: normal;
+      font-size: 13px;
+      color: #c4a090;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .stat-card {
+      background: rgba(180, 30, 30, 0.12);
+      border: 1px solid rgba(190, 60, 60, 0.32);
+      border-radius: 10px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ff7a7a;
+      display: block;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: #d4b0a8;
+      margin-top: 7px;
+      line-height: 1.45;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 8px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, #ff7a7a 0%, rgba(180, 30, 30, 0.15) 100%);
+    }
+    .timeline-item {
+      position: relative;
+      padding: 12px 0 12px 18px;
+      border-bottom: 1px solid rgba(190, 60, 60, 0.14);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 18px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff7a7a;
+      box-shadow: 0 0 8px rgba(200, 50, 50, 0.5);
+    }
+    .timeline-label {
+      font-weight: 700;
+      color: #ff9080;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+    .timeline-text {
+      color: #eedddd;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .quote-carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      min-height: 110px;
+    }
+    .quote-slide {
+      display: none;
+      padding: 20px;
+      background: rgba(50, 12, 12, 0.72);
+      border: 1px solid rgba(190, 60, 60, 0.32);
+      border-radius: 12px;
+      font-style: italic;
+      line-height: 1.72;
+      color: #f0d0c8;
+      animation: fadeIn 0.38s ease;
+    }
+    .quote-slide.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .carousel-controls { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+    .carousel-btn {
+      background: rgba(190, 60, 60, 0.18);
+      border: 1px solid rgba(190, 60, 60, 0.45);
+      color: #ff7a7a;
+      border-radius: 6px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(190, 60, 60, 0.35); }
+    .carousel-dots { display: flex; gap: 6px; align-items: center; margin-left: auto; }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(190, 60, 60, 0.3);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .dot.active { background: #ff7a7a; }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 14px 0;
+    }
+    @media (max-width: 580px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-box { padding: 16px; border-radius: 10px; }
+    .compare-box.fiction {
+      background: rgba(180, 30, 30, 0.12);
+      border: 1px solid rgba(190, 60, 60, 0.32);
+    }
+    .compare-box.reality {
+      background: rgba(255, 214, 102, 0.06);
+      border: 1px solid rgba(255, 214, 102, 0.24);
+    }
+    .compare-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+    .compare-box.fiction .compare-label { color: #ff7a7a; }
+    .compare-box.reality .compare-label { color: #ffd666; }
+    .compare-text { font-size: 14px; line-height: 1.6; color: #f0e4d8; }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .btn {
+      text-decoration: none;
+      color: #2b1d00;
+      font-weight: 800;
+      border-radius: 8px;
+      padding: 8px 13px;
+      background: linear-gradient(135deg, #ffe6a0, #ffc85c);
+      border: 1px solid #ffcf57;
+      font-size: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
+    .pull-quote {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ff7a7a;
+      border-left: 4px solid #ff7a7a;
+      padding: 10px 18px;
+      margin: 18px 0;
+      line-height: 1.5;
+      background: rgba(180, 30, 30, 0.08);
+      border-radius: 0 10px 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero-banner">
+      <h1 id="page-title">Harvested</h1>
+      <p class="hero-sub">In <em>Never Let Me Go</em>, clones are bred from birth to donate their vital organs — a fate sealed before they ever draw their first breath. This page examines the dehumanizing organ system, why it is fundamentally unjust, and how it mirrors real inequities in who lives and who is left to "complete."</p>
+    </div>
+
+    <!-- The System -->
+    <div class="section-card red-accent">
+      <h2 class="red">The System</h2>
+      <p>In Kazuo Ishiguro's <em>Never Let Me Go</em>, clones exist for a single, inescapable purpose: to donate their organs to the non-clone population. Beginning with their first "donation," clones are progressively harvested until their bodies give out — a process euphemistically called "completing." They are not murdered outright; instead, they are kept alive just long enough to provide the maximum number of usable organs.</p>
+      <p>There is no consent. No opt-out. No alternative path. From the moment a clone is created, their trajectory is fixed. Whether raised in the relative privilege of Hailsham or in the far starker institutions described elsewhere in the narrative, every clone is ultimately funneled toward the same end.</p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-label">Birth &amp; Early Childhood</div>
+          <div class="timeline-text">Clones are created and raised in controlled institutions. At Hailsham, they receive arts education and emotional development. Elsewhere, conditions are far more utilitarian — bare environments stripped of identity formation.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-label">Adolescence — Half-Truths</div>
+          <div class="timeline-text">Clones begin to sense their purpose, but the truth is communicated in vague, cushioned language. Miss Lucy's honesty is an aberration; most guardians condition acceptance through silence and euphemism.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-label">Adulthood — The Carer Phase</div>
+          <div class="timeline-text">Before donating, clones serve as "carers," looking after others already in the donation cycle. This phase maintains the system's order, creates emotional attachment to the process, and delays direct confrontation with their own fate.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-label">First Donation</div>
+          <div class="timeline-text">The extraction cycle begins. Organs are surgically removed. The clone recovers, then is cycled back — as a carer briefly, then as a donor again. Each donation extracts more, leaves less.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-label">Completing</div>
+          <div class="timeline-text">After three or four donations, the clone "completes." There is no ceremony. No mourning from wider society. Their existence ends as quietly and as efficiently as it was designed to begin: in total service to others.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Choice -->
+    <div class="section-card red-accent">
+      <h2 class="red">No Choice — The Core Injustice</h2>
+      <p>The defining injustice of the organ system is the total absence of agency. The clones did not volunteer. They were engineered for this role, then educated just enough to understand what is being taken from them — but never empowered to refuse it.</p>
+
+      <div class="pull-quote">"You were told and not told." — Miss Lucy, <em>Never Let Me Go</em></div>
+
+      <blockquote>
+        "Hailsham students receive education, art, and something approaching love — and yet they still cannot escape. This reveals the failure of humanizing education to produce actual liberation when structural conditions remain unchanged."
+        <cite>— Adapted from Snaza, Nathan. "The Failure of Humanizing Education in Kazuo Ishiguro's <em>Never Let Me Go</em>." <em>Lit: Literature Interpretation Theory</em>, vol. 26, no. 3, July 2015, pp. 215–234. https://doi.org/10.1080/10436928.2015.1062344</cite>
+      </blockquote>
+
+      <p>Nathan Snaza's analysis highlights a devastating irony: Hailsham's humanizing education — its emphasis on creativity, emotional development, and individual identity — ultimately changes nothing about the clones' fates. They are educated <em>as</em> humans but never treated <em>as</em> humans in the eyes of law or society. Their humanity is acknowledged on one hand and exploited on the other.</p>
+      <p>This contradiction exposes the limits of education as a tool of liberation when structural power remains untouched. No matter how much art Kathy and Tommy create, no matter how deeply they love one another, the system is designed to consume them — and it does.</p>
+    </div>
+
+    <!-- Quote Carousel -->
+    <div class="section-card">
+      <h2>Voices from <em>Never Let Me Go</em></h2>
+      <p style="font-size:14px; color:#c4b09a; margin-bottom:12px;">Key moments that illuminate the organ system's injustice — click through to hear the story:</p>
+      <div class="quote-carousel" id="carousel">
+        <div class="quote-slide active">
+          "We all complete. Maybe none of us really understand what we've lived through, or feel we've had enough time."
+          <br><br><span style="font-size:13px; color:#c4a090; font-style:normal;">— Kathy H., <em>Never Let Me Go</em></span>
+        </div>
+        <div class="quote-slide">
+          "We didn't have lives at all. We were just there to donate and then complete."
+          <br><br><span style="font-size:13px; color:#c4a090; font-style:normal;">— Ruth, <em>Never Let Me Go</em></span>
+        </div>
+        <div class="quote-slide">
+          "Maybe none of us really understand what we've lived through... The very possibility of a deferral was used to channel their hope — not to give them power, but to keep them compliant."
+          <br><br><span style="font-size:13px; color:#c4a090; font-style:normal;">— Analysis via Snaza (2015), pp. 218–220</span>
+        </div>
+        <div class="quote-slide">
+          "Their creativity was proof of their souls. Their souls were proof of their humanity. And none of it saved them."
+          <br><br><span style="font-size:13px; color:#c4a090; font-style:normal;">— Analysis via Snaza (2015)</span>
+        </div>
+        <div class="quote-slide">
+          "All the while, 'ordinary' humans remained silent beneficiaries — their comfort purchased at the cost of another class's slow erasure."
+          <br><br><span style="font-size:13px; color:#c4a090; font-style:normal;">— Exhibit analysis connecting upper-class complacency to the organ system</span>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prev-btn">← Prev</button>
+        <button class="carousel-btn" id="next-btn">Next →</button>
+        <div class="carousel-dots" id="dots"></div>
+      </div>
+    </div>
+
+    <!-- Real World Stats -->
+    <div class="section-card red-accent">
+      <h2 class="red">The Real World: Organ Inequality</h2>
+      <p>The organ donation system in <em>Never Let Me Go</em> is fiction — but the unequal access to life-saving transplants in the real world is not. Wealth and social status profoundly affect who receives organs and who is left waiting.</p>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-number">100K+</span>
+          <div class="stat-label">People on the U.S. organ transplant waiting list at any given time (UNOS, 2023)</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">17</span>
+          <div class="stat-label">People who die each day in the U.S. while waiting for an organ</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">$1M+</span>
+          <div class="stat-label">Estimated lifetime cost of a heart transplant, excluding ongoing immunosuppressant medications</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">$1.7B</span>
+          <div class="stat-label">Estimated annual global revenue from organ trafficking, which preys almost exclusively on economically desperate populations (WHO estimates)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fiction vs Reality -->
+    <div class="section-card">
+      <h2>Fiction Meets Reality</h2>
+      <p>The parallels between Ishiguro's world and our own are uncomfortable but direct:</p>
+      <div class="compare-grid">
+        <div class="compare-box fiction">
+          <div class="compare-label">In Never Let Me Go</div>
+          <div class="compare-text">Clones are born without consent into a system that consumes their bodies. Class determines role. Education is offered but cannot alter fate. "Completing" is not called death — language softens the violence.</div>
+        </div>
+        <div class="compare-box reality">
+          <div class="compare-label">In the Real World</div>
+          <div class="compare-text">Poor individuals are disproportionately pressured to sell organs out of financial desperation. "Transplant tourism" exploits economically vulnerable populations in developing nations. The wealthy buy time; the poor sell organs to survive.</div>
+        </div>
+        <div class="compare-box fiction">
+          <div class="compare-label">In Never Let Me Go</div>
+          <div class="compare-text">Society benefits from the system but avoids confronting its moral reality. Guardians justify through euphemism. The general public's comfort depends on the clones' silence and compliance — on their not making a scene.</div>
+        </div>
+        <div class="compare-box reality">
+          <div class="compare-label">In the Real World</div>
+          <div class="compare-text">Wealthier patients access transplant centers with shorter wait times and better post-care. Insurance coverage — tied to employment and income — determines survival outcomes as much as medical need.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education Cannot Fix It Alone -->
+    <div class="section-card red-accent">
+      <h2 class="red">What Education Cannot Fix Alone</h2>
+      <p>Snaza's central argument is that <em>Never Let Me Go</em> exposes the limits of "humanizing education" — a philosophy that emphasizes creativity, empathy, and full selfhood. Hailsham embodies this approach: it sees its students as fully human and educates them accordingly. Yet it fails to liberate them.</p>
+      <p>Being seen as human is not enough. Being <em>educated</em> as human is not enough. Without structural change to the systems that govern who donates organs, who receives them, who lives and who "completes" — education alone becomes a more sophisticated tool of control rather than a path to freedom.</p>
+      <p>The clones are, in Snaza's reading, failed <em>by</em> humanizing education — not because that education was flawed in its intentions, but because it operated within and ultimately served a structure designed to exploit them regardless of their humanity.</p>
+      <p>This is the novel's most unsettling insight: the system did not need to deny the clones' humanity to destroy them. It only needed to keep that humanity confined to a predetermined role.</p>
+      <div class="nav">
+        <a class="btn" href="index.html">Back Home</a>
+        <a class="btn" href="page.html">About the Exhibit</a>
+        <a class="btn" href="work-cited.html">Sources</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Typewriter title
+    const el = document.getElementById("page-title");
+    const text = "Harvested";
+    let i = 0;
+    el.textContent = "";
+    (function type() {
+      el.textContent = text.slice(0, i++);
+      if (i <= text.length) setTimeout(type, 80);
+    })();
+
+    // Carousel logic
+    const slides = document.querySelectorAll(".quote-slide");
+    const dotsContainer = document.getElementById("dots");
+    let current = 0;
+
+    slides.forEach((_, idx) => {
+      const dot = document.createElement("div");
+      dot.className = "dot" + (idx === 0 ? " active" : "");
+      dot.addEventListener("click", () => goTo(idx));
+      dotsContainer.appendChild(dot);
+    });
+
+    function goTo(n) {
+      slides[current].classList.remove("active");
+      dotsContainer.children[current].classList.remove("active");
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add("active");
+      dotsContainer.children[current].classList.add("active");
+    }
+
+    document.getElementById("prev-btn").addEventListener("click", () => goTo(current - 1));
+    document.getElementById("next-btn").addEventListener("click", () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 6500);
+  </script>
+</body>
+</html>

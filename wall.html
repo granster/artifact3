@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Floor Wall Page</title>
+  <title>Class Wall — Made For Failure</title>
   <style>
     html, body {
       margin: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       font-family: Arial, sans-serif;
     }
-
     body {
       color: #f5efe6;
       background-color: #5e4a3d;
@@ -24,142 +23,442 @@
         linear-gradient(140deg, #786253 0%, #6a5446 35%, #5e4a3d 100%);
       background-size: 180px 180px, 220px 220px, 260px 260px, 42px 42px, 42px 42px, cover;
       display: grid;
-      place-items: center;
+      place-items: start center;
+      padding: 28px 0 48px;
     }
 
     .card {
-      width: min(720px, calc(100% - 32px));
-      background: rgba(20, 15, 12, 0.62);
-      border: 1px solid rgba(255, 216, 153, 0.45);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
-      backdrop-filter: blur(2px);
-      transform-style: preserve-3d;
-      transition: transform 260ms ease;
+      width: min(800px, calc(100% - 32px));
+      background: rgba(16, 11, 8, 0.72);
+      border: 1px solid rgba(255, 216, 153, 0.42);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+      backdrop-filter: blur(3px);
+    }
+
+    .floor-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .floor-badge {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
     }
 
     .title {
-      margin: 0 0 10px;
+      margin: 0 0 4px;
       color: #ffd9a0;
-      font-size: 30px;
+      font-size: clamp(22px, 3.5vw, 32px);
       letter-spacing: 0.3px;
     }
 
     .subtitle {
-      margin: 0 0 14px;
-      color: #ffeccf;
-      font-size: 16px;
+      margin: 0;
+      color: #c8b898;
+      font-size: 14px;
+      font-style: italic;
     }
 
-    .facts {
-      margin: 0 0 16px;
-      padding-left: 20px;
-      line-height: 1.5;
+    .key-quote {
+      background: rgba(255, 214, 102, 0.08);
+      border-left: 4px solid rgba(255, 214, 102, 0.7);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-style: italic;
+      color: #ffe3b0;
+      line-height: 1.65;
+      font-size: 15px;
     }
 
-    .back-btn {
-      display: inline-block;
+    .fact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .fact-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 216, 153, 0.18);
+      border-radius: 10px;
+      padding: 13px 15px;
+      line-height: 1.65;
+      font-size: 14.5px;
+      color: #f0e8d8;
+      transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+      opacity: 0;
+      transform: translateY(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .fact-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, rgba(255, 214, 102, 0.9), rgba(255, 214, 102, 0.25));
+    }
+
+    .fact-card:hover {
+      transform: translateX(5px);
+      border-color: rgba(255, 216, 153, 0.38);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .fact-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 380ms ease, transform 380ms ease;
+    }
+
+    .fact-text {
+      display: block;
+      padding-left: 6px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255, 216, 153, 0.15);
+      margin: 18px 0;
+    }
+
+    .links-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
       text-decoration: none;
       color: #2b1e12;
       background: linear-gradient(135deg, #ffe0ae 0%, #ffc978 100%);
       border: 1px solid rgba(255, 226, 176, 0.95);
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 13px;
       font-weight: 700;
+      font-size: 14px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+      display: inline-block;
     }
 
-    .back-btn:hover {
+    .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.42);
+    }
+
+    .btn.ghost {
+      background: rgba(255, 216, 153, 0.1);
+      color: #ffd9a0;
+      border-color: rgba(255, 216, 153, 0.35);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(255, 216, 153, 0.18);
+    }
+
+    .nav-hint {
+      font-size: 12px;
+      color: #8a7060;
+      margin-top: 12px;
+    }
+    .media-prompt {
+      margin: 8px 0 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 216, 153, 0.35);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #e7d9bf;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 0 0 16px;
+    }
+    @media (max-width: 700px) { .media-grid { grid-template-columns: 1fr; } }
+    .media-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 216, 153, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .media-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #ffd9a0;
+      font-weight: 800;
+    }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .stat-chip {
+      background: rgba(255, 214, 102, 0.08);
+      border: 1px solid rgba(255, 214, 102, 0.25);
+      border-radius: 8px;
+      padding: 8px;
+      text-align: center;
+    }
+    .stat-chip .value {
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffd666;
+      line-height: 1;
+      display: block;
+    }
+    .stat-chip .label {
+      font-size: 11px;
+      color: #d4c5ab;
+      line-height: 1.4;
+      margin-top: 5px;
+    }
+    .bar-wrap { display: grid; gap: 8px; }
+    .bar-line {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+    .bar-label {
+      font-size: 12px;
+      color: #d5c6aa;
+      text-align: right;
+    }
+    .bar-track {
+      height: 18px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 5px;
+    }
+    .compare-stack { display: grid; gap: 8px; }
+    .compare-item {
+      border-radius: 8px;
+      padding: 9px 10px;
+      border: 1px solid rgba(255, 216, 153, 0.2);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #ecdfca;
     }
   </style>
 </head>
 <body>
   <main class="card">
-    <h1 class="title" id="floor-title">Building Wall</h1>
-    <p class="subtitle" id="floor-subtitle">You opened this from the school homepage.</p>
-    <ul class="facts" id="floor-facts"></ul>
-    <a class="back-btn" href="index.html">Back to Homepage</a>
+    <div class="floor-header">
+      <div class="floor-badge" id="floor-badge"></div>
+      <div>
+        <h1 class="title" id="floor-title">Class Wall</h1>
+        <p class="subtitle" id="floor-subtitle"></p>
+      </div>
+    </div>
+
+    <div class="key-quote" id="key-quote"></div>
+    <div class="media-prompt" id="media-prompt"></div>
+    <div class="media-grid" id="media-grid"></div>
+
+    <div class="fact-grid" id="fact-grid"></div>
+
+    <div class="divider"></div>
+
+    <div class="links-row">
+      <a class="btn" href="index.html">Back to Homepage</a>
+    </div>
+    <p class="nav-hint">Press 1, 2, or 3 on the homepage to switch floors.</p>
   </main>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const floorId = params.get("floor") || "2";
+
     const floorData = {
       "1": {
         name: "Low Class",
-        theme: "Access and Opportunity",
+        theme: "Access Denied — Predetermined Fate",
+        badge: "↓",
+        badgeStyle: "background: rgba(200,50,50,0.22); color: #ff7a7a; border: 1px solid rgba(200,50,50,0.4);",
+        keyQuote: "\"Without opportunities for creative expression or critical thinking, they are treated as disposable — never shown to have individuality beyond a predetermined biological role.\"",
+        mediaPrompt: "Suggested media: stills of bleak donor facilities, education inequality chart (Pew), underfunded school visuals, and one quote card from APA/LPI findings.",
+        media: {
+          stats: [
+            { value: "11%", label: "Lowest-income college completion" },
+            { value: "1/3", label: "States underfund high-poverty districts" },
+            { value: "17", label: "Daily U.S. deaths waiting for organs" },
+            { value: "100K+", label: "People waiting for transplants" }
+          ],
+          bars: [
+            { label: "School Funding", value: 28, color: "linear-gradient(90deg,#a01818,#ff7a7a)" },
+            { label: "Career Access", value: 32, color: "linear-gradient(90deg,#903020,#ffb07a)" },
+            { label: "Social Mobility", value: 24, color: "linear-gradient(90deg,#7a3030,#ff8f8f)" }
+          ],
+          compare: [
+            "Fiction: Donor clones are raised for extraction, not development.",
+            "Reality: Underfunded schools reduce upward mobility and long-term agency."
+          ]
+        },
         facts: [
-          "In Never Let Me Go, clones born and raised outside of Hailsham symbolize the lower social class because they are denied meaningful education, identity development, and hope for an alternative future.",
-          "Unlike Hailsham students who are encouraged to create art and reflect on their emotions, clones in other institutions are raised in stark environments focused only on their function as organ donors.",
-          "Without opportunities for creative expression or critical thinking, they are treated as disposable and never shown to have individuality beyond a predetermined biological role.",
-          "This lack of education has major consequences: they are not equipped to question the system that exploits them, so they remain compliant and passive, accepting their fate without resistance.",
-          "The contrast with Hailsham shows how even limited educational access can produce very different lived experiences, and how education can function as either empowerment or control depending on who can access it.",
-          "This mirrors real-world inequality, where underfunded schools often deny students access to resources for intellectual and creative growth, reinforcing barriers to upward mobility.",
-          "The lower-tier clones reveal a society where withholding education preserves power and predetermines not only success, but also a person's sense of self and worth.",
-          "Graph source: https://www.pewresearch.org/social-trends/2012/09/10/a-third-of-americans-now-say-they-are-in-the-lower-classes/"
+          "In Never Let Me Go, clones raised outside of Hailsham symbolize the lower social class: denied meaningful education, identity development, and any hope for an alternative future.",
+          "Unlike Hailsham students who are encouraged to create art and reflect on their emotions, clones in other institutions are raised in stark, utilitarian environments focused solely on their function as organ donors.",
+          "Without access to creative expression or critical thinking, these clones are never equipped to question the system that exploits them — they remain compliant, accepting their fate without resistance.",
+          "The contrast with Hailsham reveals how even limited educational access can produce very different lived experiences, and how education functions as either empowerment or control depending on who gets to access it.",
+          "This mirrors real-world inequality: underfunded schools deny students access to resources for intellectual and creative growth, reinforcing barriers to upward mobility before children even reach adulthood.",
+          "The lower-tier clones expose a society where withholding education preserves power and predetermines not only success, but a person's sense of self and worth.",
+          "Research shows that children from underprivileged backgrounds begin facing structural educational disadvantages before they are even born — a fact that echoes the clones' birth-determined social position (American Psychological Association, 2017)."
         ]
       },
       "2": {
         name: "Middle Class",
-        theme: "Mobility and Pressure",
+        theme: "The Gilded Cage — Awareness Without Power",
+        badge: "↔",
+        badgeStyle: "background: rgba(255,214,102,0.15); color: #ffd666; border: 1px solid rgba(255,214,102,0.38);",
+        keyQuote: "\"Hailsham masks dehumanization with culture and demonstrates how middle-tier positioning can produce not freedom, but painful awareness of systemic entrapment.\"",
+        mediaPrompt: "Suggested media: Hailsham art/classroom imagery, quote card on deferrals, visual comparing degree attainment vs debt burden, and one scene still emphasizing false hope.",
+        media: {
+          stats: [
+            { value: "79%", label: "Top-income completion vs lower tiers" },
+            { value: "4×", label: "Top quintile persistence (Brookings)" },
+            { value: "$42K", label: "Lower-middle median earnings" },
+            { value: "$68K", label: "Upper-middle median earnings" }
+          ],
+          bars: [
+            { label: "Education Access", value: 64, color: "linear-gradient(90deg,#2060c0,#77bcff)" },
+            { label: "Freedom to Choose", value: 45, color: "linear-gradient(90deg,#708020,#ffd666)" },
+            { label: "Debt Constraint", value: 71, color: "linear-gradient(90deg,#805020,#ffb45d)" }
+          ],
+          compare: [
+            "Fiction: Hailsham offers growth, but no structural escape.",
+            "Reality: Credentials increase options, but debt and labor structures limit mobility."
+          ]
+        },
         facts: [
-          "In Never Let Me Go, the clones raised at Hailsham serve as a compelling metaphor for the middle class. Unlike clones in stark, utilitarian facilities who are treated purely as spare parts, Hailsham students are given a rich liberal arts education focused on art, writing, and reflection.",
-          "However, this privilege is ultimately a gilded cage. Despite cultural enrichment and emotional development, Hailsham students still face the same predetermined fate as organ donors.",
-          "This creates a cruel irony: they gain self-awareness and the language to understand what it means to be human, but they are never given power to challenge the system exploiting them.",
-          "Their education functions less as liberation and more as pacification. It keeps them intellectually engaged while conditioning them to remain compliant and fulfill expected social roles.",
-          "This dynamic parallels middle-class education in the real world, where students are often directed toward higher education with promises of mobility, yet many become constrained by student debt and rigid workforce demands.",
-          "Hailsham also illustrates how a slight educational advantage can create a false sense of exceptionalism, seen in rumors like deferrals for true love, which maintain hope without changing structural reality.",
-          "Ultimately, Hailsham masks dehumanization with culture and demonstrates how middle-tier positioning can produce not freedom, but painful awareness of systemic entrapment."
+          "In Never Let Me Go, Hailsham clones serve as a compelling metaphor for the middle class — given access to art, writing, and reflection, but ultimately unable to escape their predetermined role as organ donors.",
+          "This creates a cruel irony: Hailsham students gain the self-awareness and language to understand what it means to be human, yet are never given the power to challenge the system that exploits them.",
+          "Their education functions less as liberation and more as pacification — keeping them intellectually engaged while conditioning them to remain compliant and fulfill expected social roles.",
+          "This dynamic parallels middle-class education in the real world, where students are directed toward higher education with promises of mobility, yet many become constrained by student debt and rigid workforce demands.",
+          "Hailsham also illustrates how a slight educational advantage can create a false sense of exceptionalism. Rumors of 'deferrals for true love' mirror how middle-class aspirations maintain hope without changing structural reality.",
+          "Snaza (2015) argues that humanizing education — education that acknowledges full selfhood — ultimately fails at Hailsham because it cannot overcome structural conditions that have already determined the clones' social function.",
+          "The middle class, like Hailsham's clones, may have more opportunity than those below — but still faces structural barriers that prevent full access to the wealth, choice, and power held by those above."
         ]
       },
       "3": {
         name: "Upper Class",
-        theme: "Privilege and Protection",
+        theme: "Privilege &amp; Complacency — Choice as Default",
+        badge: "↑",
+        badgeStyle: "background: rgba(119,188,255,0.15); color: #77bcff; border: 1px solid rgba(119,188,255,0.38);",
+        keyQuote: "\"They may not be overtly malicious, but they remain apathetic — because they benefit from the system, and have more to lose from reform than from silence.\"",
+        mediaPrompt: "Suggested media: polished hospital/elite-life imagery, beneficiaries vs donors comparison graphic, and social mobility chart showing class persistence.",
+        media: {
+          stats: [
+            { value: "93", label: "High-income life expectancy index" },
+            { value: "$115K", label: "High-income median earnings" },
+            { value: "4×", label: "Likelihood of staying top quintile" },
+            { value: "90+", label: "Housing/health security index" }
+          ],
+          bars: [
+            { label: "Choice Autonomy", value: 92, color: "linear-gradient(90deg,#2060c0,#77bcff)" },
+            { label: "Resource Access", value: 95, color: "linear-gradient(90deg,#208040,#80e890)" },
+            { label: "System Incentive", value: 88, color: "linear-gradient(90deg,#805020,#ffd666)" }
+          ],
+          compare: [
+            "Fiction: Ordinary humans benefit from donor structures without personal cost.",
+            "Reality: Elite educational pipelines and inherited capital preserve class position."
+          ]
+        },
         facts: [
-          "Within the world of Never Let Me Go, the \"ordinary\" humans can be seen as a representation of the upper class in modern society. They are treated as fully autonomous people and are able to operate with a normal range of freedom.",
-          "Unlike the clones, they can choose their life paths and also benefit directly from the clone system by receiving organs when necessary. This stands in direct contrast to clones whose futures are largely predetermined.",
-          "Even when clones experience better conditions, such as at Hailsham, they are still confined to the same narrow social roles of caretaker or organ donor.",
-          "This dynamic reflects upper-class advantage in real-world education: those from wealthier backgrounds are more likely to access stronger educational opportunities, which in turn expands life outcomes and social mobility.",
-          "The general complacency of ordinary humans also parallels upper-class complacency. Although they may not understand every detail of the system, they appear aware of its overall structure and do not act to change it.",
-          "They may not be overtly malicious, but they remain apathetic because they benefit from the system and have more to lose from reform.",
-          "Thus, while ordinary humans play a smaller narrative role, their perspective reinforces the film's representation of rigid social mobility maintained by educational inequality."
+          "Within Never Let Me Go, 'ordinary' humans represent the upper class: treated as fully autonomous people, free to choose their life paths, and direct beneficiaries of the clone system — receiving organs when necessary.",
+          "This stands in direct contrast to the clones, whose futures are largely predetermined. Even Hailsham clones, despite better treatment, remain confined to the same narrow social roles of caretaker or organ donor.",
+          "This dynamic reflects upper-class advantage in real-world education: wealthier families access stronger educational opportunities, which compounds over time to expand life outcomes and social mobility across generations.",
+          "The general complacency of ordinary humans parallels upper-class complacency — aware of the system's broad structure but unmotivated to dismantle it, since they are its primary beneficiaries.",
+          "Research shows children born into the top income quintile are four times more likely to remain there than to fall to the bottom — structural advantage reproduces itself through inherited networks, school quality, and social capital (Brookings Institution).",
+          "The upper class in the novel is not depicted as cartoonishly evil — just unconcerned. This subtlety is the point: systems of inequality do not require active cruelty to persist, only passive acceptance from those who gain from them.",
+          "Ultimately, ordinary humans' small narrative role reinforces the film's central argument: rigid social structures are maintained not by visible oppression alone, but by the unexamined comfort of those at the top."
         ]
       }
     };
 
-    const title = document.getElementById("floor-title");
-    const subtitle = document.getElementById("floor-subtitle");
-    const facts = document.getElementById("floor-facts");
-    const card = document.querySelector(".card");
+    const titleEl = document.getElementById("floor-title");
+    const subtitleEl = document.getElementById("floor-subtitle");
+    const badgeEl = document.getElementById("floor-badge");
+    const keyQuoteEl = document.getElementById("key-quote");
+    const mediaPromptEl = document.getElementById("media-prompt");
+    const mediaGridEl = document.getElementById("media-grid");
+    const factGrid = document.getElementById("fact-grid");
 
     function loadFloor() {
       const floor = floorData[floorId];
       if (!floor) {
-        title.textContent = "Floor Not Found";
-        subtitle.textContent = "Choose a valid class from the homepage.";
-        facts.innerHTML = "<li>No details available for this selection.</li>";
+        titleEl.textContent = "Floor Not Found";
+        subtitleEl.textContent = "Choose a valid class from the homepage.";
+        factGrid.innerHTML = "<p>No details available.</p>";
         return;
       }
 
-      title.textContent = floor.name + " Wall";
-      subtitle.textContent = floor.theme;
-      facts.innerHTML = "";
-      floor.facts.forEach((line) => {
-        const item = document.createElement("li");
-        item.textContent = line;
-        facts.appendChild(item);
+      titleEl.textContent = floor.name + " — Wall";
+      subtitleEl.textContent = floor.theme;
+      badgeEl.style.cssText = floor.badgeStyle;
+      badgeEl.textContent = floor.badge;
+      keyQuoteEl.textContent = floor.keyQuote;
+      mediaPromptEl.textContent = floor.mediaPrompt;
+      mediaGridEl.innerHTML =
+        "<section class='media-card'>" +
+          "<p class='media-title'>Key Indicators</p>" +
+          "<div class='stat-row'>" +
+            floor.media.stats.map((s) =>
+              "<div class='stat-chip'><span class='value'>" + s.value + "</span><span class='label'>" + s.label + "</span></div>"
+            ).join("") +
+          "</div>" +
+        "</section>" +
+        "<section class='media-card'>" +
+          "<p class='media-title'>Class Impact Graph</p>" +
+          "<div class='bar-wrap'>" +
+            floor.media.bars.map((b) =>
+              "<div class='bar-line'><span class='bar-label'>" + b.label + "</span><div class='bar-track'><div class='bar-fill' style='width:" + b.value + "%;background:" + b.color + ";'>" + b.value + "%</div></div></div>"
+            ).join("") +
+          "</div>" +
+          "<div class='compare-stack' style='margin-top:10px;'>" +
+            floor.media.compare.map((c) => "<div class='compare-item'>" + c + "</div>").join("") +
+          "</div>" +
+        "</section>";
+
+      factGrid.innerHTML = "";
+      floor.facts.forEach((fact, idx) => {
+        const card = document.createElement("div");
+        card.className = "fact-card";
+        card.innerHTML = "<span class='fact-text'>" + fact + "</span>";
+        factGrid.appendChild(card);
+        setTimeout(() => card.classList.add("visible"), 80 * (idx + 1));
       });
     }
-
-    document.addEventListener("mousemove", (event) => {
-      const x = (event.clientX / window.innerWidth - 0.5) * 5;
-      const y = (event.clientY / window.innerHeight - 0.5) * 5;
-      card.style.transform = "rotateY(" + x + "deg) rotateX(" + (-y) + "deg)";
-    });
 
     loadFloor();
   </script>
