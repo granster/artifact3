@@ -274,38 +274,36 @@
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
       margin: 0 0 18px;
     }
     @media (max-width: 700px) { .gallery { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 460px) { .gallery { grid-template-columns: 1fr; } }
-    .photo-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 216, 153, 0.2);
-      border-radius: 10px;
+    .photo {
+      position: relative;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 216, 153, 0.18);
+      background: #1a130c;
+      aspect-ratio: 4 / 3;
+      transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
     }
-    .photo-card:hover {
+    .photo:hover {
       transform: translateY(-3px);
-      border-color: rgba(255, 216, 153, 0.45);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.38);
+      border-color: rgba(255, 216, 153, 0.4);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.42);
     }
-    .photo-card img {
+    .photo img {
       width: 100%;
-      height: 160px;
+      height: 100%;
       object-fit: cover;
       display: block;
-      background: #1a130c;
+      transition: transform 500ms ease, filter 500ms ease;
+      filter: saturate(0.95) contrast(1.02);
     }
-    .photo-caption {
-      padding: 8px 10px 10px;
-      font-size: 12px;
-      color: #e7d9bf;
-      line-height: 1.4;
-      text-align: center;
+    .photo:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.05) contrast(1.05);
     }
   </style>
 </head>
@@ -320,9 +318,8 @@
     </div>
 
     <div class="key-quote" id="key-quote"></div>
-    <div class="media-prompt" id="media-prompt"></div>
-    <div class="media-grid" id="media-grid"></div>
     <div class="gallery" id="gallery"></div>
+    <div class="media-grid" id="media-grid"></div>
 
     <div class="fact-grid" id="fact-grid"></div>
 
@@ -463,7 +460,6 @@
     const subtitleEl = document.getElementById("floor-subtitle");
     const badgeEl = document.getElementById("floor-badge");
     const keyQuoteEl = document.getElementById("key-quote");
-    const mediaPromptEl = document.getElementById("media-prompt");
     const mediaGridEl = document.getElementById("media-grid");
     const galleryEl = document.getElementById("gallery");
     const factGrid = document.getElementById("fact-grid");
@@ -482,7 +478,6 @@
       badgeEl.style.cssText = floor.badgeStyle;
       badgeEl.textContent = floor.badge;
       keyQuoteEl.textContent = floor.keyQuote;
-      mediaPromptEl.textContent = floor.mediaPrompt;
       mediaGridEl.innerHTML =
         "<section class='media-card'>" +
           "<p class='media-title'>Key Indicators</p>" +
@@ -506,8 +501,7 @@
 
       const photos = (floor.media && floor.media.photos) || [];
       galleryEl.innerHTML = photos.map((p) =>
-        "<figure class='photo-card'><img src='" + encodeURI(p.src) + "' alt='" + p.caption + "' loading='lazy'>" +
-        "<figcaption class='photo-caption'>" + p.caption + "</figcaption></figure>"
+        "<div class='photo'><img src='" + encodeURI(p.src) + "' alt='" + p.caption + "' loading='lazy'></div>"
       ).join("");
       galleryEl.style.display = photos.length ? "grid" : "none";
 
