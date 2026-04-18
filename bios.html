@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bios</title>
+  <title>Team Bios — Made For Failure</title>
   <style>
+    :root { color-scheme: dark; }
     body {
       margin: 0;
       min-height: 100vh;
@@ -112,7 +113,11 @@
       padding: 8px 12px;
       font-weight: 800;
       display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
   </style>
 </head>
 <body>
@@ -126,7 +131,13 @@
     </section>
     <div class="footer-row">
       <span class="tag">English 1102 Project</span>
+    </div>
+    <div class="nav">
       <a class="btn" href="index.html">Back Home</a>
+      <a class="btn" href="page.html">About</a>
+      <a class="btn" href="summary.html">Summary</a>
+      <a class="btn" href="organs.html">Harvested</a>
+      <a class="btn" href="work-cited.html">Sources</a>
     </div>
   </main>
   <script>
