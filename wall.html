@@ -3,23 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Class Wall — Made For Failure</title>
+  <title>Class Wall: Made For Failure</title>
   <style>
-    html, body {
-      margin: 0;
-      width: 100%;
-      min-height: 100%;
-      font-family: Arial, sans-serif;
-    }
+    html, body { margin: 0; width: 100%; min-height: 100%; font-family: Arial, sans-serif; }
     body {
       color: #f5efe6;
       background-color: #5e4a3d;
       background-image:
-        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.08) 0 2px, transparent 3px),
-        radial-gradient(circle at 78% 34%, rgba(255, 255, 255, 0.06) 0 2px, transparent 3px),
-        radial-gradient(circle at 40% 72%, rgba(0, 0, 0, 0.15) 0 3px, transparent 4px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.12) 1px, transparent 1px),
-        linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.08) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 34%, rgba(255,255,255,0.06) 0 2px, transparent 3px),
+        radial-gradient(circle at 40% 72%, rgba(0,0,0,0.15) 0 3px, transparent 4px),
+        linear-gradient(90deg, rgba(0,0,0,0.12) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
         linear-gradient(140deg, #786253 0%, #6a5446 35%, #5e4a3d 100%);
       background-size: 180px 180px, 220px 220px, 260px 260px, 42px 42px, 42px 42px, cover;
       display: grid;
@@ -28,51 +23,57 @@
     }
 
     .card {
-      width: min(800px, calc(100% - 32px));
-      background: rgba(16, 11, 8, 0.72);
-      border: 1px solid rgba(255, 216, 153, 0.42);
+      width: min(820px, calc(100% - 32px));
+      background: rgba(16,11,8,0.72);
+      border: 1px solid rgba(255,216,153,0.42);
       border-radius: 16px;
       padding: 26px;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.48);
       backdrop-filter: blur(3px);
     }
 
-    .floor-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 20px;
+    /* Floor nav */
+    .floor-nav { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .floor-nav-btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,216,153,0.28);
+      color: #b0a090;
+      background: rgba(255,255,255,0.04);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .floor-nav-btn:hover {
+      background: rgba(255,216,153,0.12);
+      color: #ffd9a0;
+      border-color: rgba(255,216,153,0.5);
+      transform: translateY(-1px);
+    }
+    .floor-nav-btn.active {
+      color: #2b1e12;
+      border-color: transparent;
+      background: linear-gradient(135deg, #ffe0ae, #ffc978);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
+    /* Header */
+    .floor-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
     .floor-badge {
       flex-shrink: 0;
-      width: 52px;
-      height: 52px;
+      width: 52px; height: 52px;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 900;
     }
+    .title { margin: 0 0 4px; color: #ffd9a0; font-size: clamp(22px, 3.5vw, 32px); letter-spacing: 0.3px; }
+    .subtitle { margin: 0; color: #c8b898; font-size: 14px; font-style: italic; }
 
-    .title {
-      margin: 0 0 4px;
-      color: #ffd9a0;
-      font-size: clamp(22px, 3.5vw, 32px);
-      letter-spacing: 0.3px;
-    }
-
-    .subtitle {
-      margin: 0;
-      color: #c8b898;
-      font-size: 14px;
-      font-style: italic;
-    }
-
+    /* Key quote */
     .key-quote {
-      background: rgba(255, 214, 102, 0.08);
-      border-left: 4px solid rgba(255, 214, 102, 0.7);
+      background: rgba(255,214,102,0.08);
+      border-left: 4px solid rgba(255,214,102,0.7);
       border-radius: 0 10px 10px 0;
       padding: 12px 16px;
       margin-bottom: 20px;
@@ -82,228 +83,145 @@
       font-size: 15px;
     }
 
-    .fact-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 20px;
+    /* Section labels */
+    .section-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 5px;
+      margin: 18px 0 10px;
     }
+    .novel-label   { background: rgba(255,214,102,0.12); color: #ffd666; border: 1px solid rgba(255,214,102,0.3); }
+    .reality-label { background: rgba(119,188,255,0.1);  color: #77bcff; border: 1px solid rgba(119,188,255,0.3); }
+    .bridge-label  { background: rgba(200,200,200,0.06); color: #a8a090; border: 1px solid rgba(200,200,200,0.18); }
 
+    /* Fact cards */
     .fact-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 216, 153, 0.18);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,216,153,0.16);
       border-radius: 10px;
-      padding: 13px 15px;
-      line-height: 1.65;
-      font-size: 14.5px;
-      color: #f0e8d8;
+      padding: 13px 15px 13px 19px;
+      line-height: 1.68; font-size: 14.5px; color: #f0e8d8;
+      margin-bottom: 10px;
+      position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(10px);
       transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
-      opacity: 0;
-      transform: translateY(10px);
-      position: relative;
-      overflow: hidden;
     }
     .fact-card::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: linear-gradient(180deg, rgba(255, 214, 102, 0.9), rgba(255, 214, 102, 0.25));
+      content: ""; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 4px;
+    }
+    .fact-card.novel-card::before   { background: linear-gradient(180deg, rgba(255,214,102,0.9), rgba(255,214,102,0.2)); }
+    .fact-card.reality-card::before { background: linear-gradient(180deg, rgba(119,188,255,0.9), rgba(119,188,255,0.2)); }
+    .fact-card:hover { transform: translateX(4px); border-color: rgba(255,216,153,0.35); background: rgba(255,255,255,0.07); }
+    .fact-card.visible { opacity: 1; transform: translateY(0); transition: opacity 380ms ease, transform 380ms ease; }
+
+    /* Thesis */
+    .thesis-block {
+      padding: 14px 18px; border-radius: 10px;
+      font-size: 15px; font-weight: 700; font-style: italic;
+      line-height: 1.55; border-left: 4px solid;
+      margin: 6px 0 18px;
     }
 
-    .fact-card:hover {
-      transform: translateX(5px);
-      border-color: rgba(255, 216, 153, 0.38);
-      background: rgba(255, 255, 255, 0.07);
-    }
-
-    .fact-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 380ms ease, transform 380ms ease;
-    }
-
-    .fact-text {
-      display: block;
-      padding-left: 6px;
-    }
-
-    .divider {
-      height: 1px;
-      background: rgba(255, 216, 153, 0.15);
-      margin: 18px 0;
-    }
-
-    .links-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      text-decoration: none;
-      color: #2b1e12;
-      background: linear-gradient(135deg, #ffe0ae 0%, #ffc978 100%);
-      border: 1px solid rgba(255, 226, 176, 0.95);
-      border-radius: 8px;
-      padding: 8px 13px;
-      font-weight: 700;
-      font-size: 14px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
-      display: inline-block;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.42);
-    }
-
-    .btn.ghost {
-      background: rgba(255, 216, 153, 0.1);
-      color: #ffd9a0;
-      border-color: rgba(255, 216, 153, 0.35);
-    }
-
-    .btn.ghost:hover {
-      background: rgba(255, 216, 153, 0.18);
-    }
-
-    .nav-hint {
-      font-size: 12px;
-      color: #8a7060;
-      margin-top: 12px;
-    }
-    .media-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin: 0 0 16px;
-    }
-    @media (max-width: 700px) { .media-grid { grid-template-columns: 1fr; } }
-    .media-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 216, 153, 0.2);
-      border-radius: 10px;
-      padding: 12px;
-    }
-    .media-title {
-      margin: 0 0 10px;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #ffd9a0;
-      font-weight: 800;
-    }
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-    .stat-chip {
-      background: rgba(255, 214, 102, 0.08);
-      border: 1px solid rgba(255, 214, 102, 0.25);
-      border-radius: 8px;
-      padding: 8px;
-      text-align: center;
-    }
-    .stat-chip .value {
-      font-size: 20px;
-      font-weight: 900;
-      color: #ffd666;
-      line-height: 1;
-      display: block;
-    }
-    .stat-chip .label {
-      font-size: 11px;
-      color: #d4c5ab;
-      line-height: 1.4;
-      margin-top: 5px;
-    }
-    .bar-wrap { display: grid; gap: 8px; }
-    .bar-line {
-      display: grid;
-      grid-template-columns: 86px 1fr;
-      gap: 8px;
-      align-items: center;
-    }
-    .bar-label {
-      font-size: 12px;
-      color: #d5c6aa;
-      text-align: right;
-    }
-    .bar-track {
-      height: 18px;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-      position: relative;
-    }
-    .bar-fill {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      padding-left: 6px;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      border-radius: 5px;
-    }
-    .compare-stack { display: grid; gap: 8px; }
-    .compare-item {
-      border-radius: 8px;
-      padding: 9px 10px;
-      border: 1px solid rgba(255, 216, 153, 0.2);
-      background: rgba(255, 255, 255, 0.03);
-      font-size: 12.5px;
-      line-height: 1.5;
-      color: #ecdfca;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 0 0 18px;
-    }
-    @media (max-width: 700px) { .gallery { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 460px) { .gallery { grid-template-columns: 1fr; } }
+    /* Inline photos */
+    .inline-photos { display: grid; gap: 10px; margin: 14px 0; }
+    .inline-photos.one  { grid-template-columns: 1fr; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .inline-photos.two  { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 520px) { .inline-photos.two { grid-template-columns: 1fr; } }
     .photo {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 216, 153, 0.18);
+      overflow: hidden; border-radius: 10px;
+      border: 1px solid rgba(255,216,153,0.18);
       background: #1a130c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       padding: 6px;
       transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
     }
-    .photo:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255, 216, 153, 0.4);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.42);
-    }
+    .photo:hover { transform: translateY(-3px); border-color: rgba(255,216,153,0.4); box-shadow: 0 10px 22px rgba(0,0,0,0.42); }
     .photo img {
-      width: 100%;
-      height: auto;
-      max-height: 280px;
-      object-fit: contain;
-      display: block;
-      border-radius: 6px;
+      width: 100%; height: auto; max-height: 260px;
+      object-fit: contain; display: block; border-radius: 6px;
       transition: transform 400ms ease, filter 400ms ease;
       filter: saturate(0.98) contrast(1.02);
     }
-    .photo:hover img {
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.05);
+    .photo:hover img { transform: scale(1.02); filter: saturate(1.05) contrast(1.05); }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0;
     }
+    @media (max-width: 580px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat-chip {
+      background: rgba(255,214,102,0.08);
+      border: 1px solid rgba(255,214,102,0.22);
+      border-radius: 8px; padding: 10px 8px; text-align: center;
+    }
+    .stat-chip .value { font-size: 22px; font-weight: 900; color: #ffd666; line-height: 1; display: block; }
+    .stat-chip .label { font-size: 11px; color: #d4c5ab; line-height: 1.4; margin-top: 6px; }
+
+    /* Bars card */
+    .bars-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,216,153,0.2);
+      border-radius: 10px; padding: 14px;
+      margin: 14px 0;
+    }
+    .media-title { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #ffd9a0; font-weight: 800; }
+    .bar-wrap { display: grid; gap: 9px; }
+    .bar-line { display: grid; grid-template-columns: 90px 1fr; gap: 8px; align-items: center; }
+    .bar-label { font-size: 12px; color: #d5c6aa; text-align: right; }
+    .bar-track { height: 20px; border-radius: 5px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .bar-fill {
+      height: 100%; display: flex; align-items: center;
+      padding-left: 7px; color: #fff; font-size: 11px; font-weight: 700;
+      border-radius: 5px; width: 0;
+      transition: width 1.1s cubic-bezier(0.25,0.8,0.25,1);
+    }
+
+    /* Compare */
+    .compare-stack { display: grid; gap: 7px; margin: 14px 0; }
+    .compare-item {
+      border-radius: 8px; padding: 9px 10px;
+      border: 1px solid rgba(255,216,153,0.18);
+      background: rgba(255,255,255,0.03);
+      font-size: 12.5px; line-height: 1.5; color: #ecdfca;
+    }
+
+    /* Bridge */
+    .fact-bridge {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,216,153,0.2);
+      border-radius: 10px; padding: 14px 18px;
+      font-size: 14.5px; line-height: 1.72;
+      color: #e8dfc8; font-style: italic; margin-bottom: 4px;
+    }
+
+    .divider { height: 1px; background: rgba(255,216,153,0.14); margin: 22px 0; }
+
+    .links-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      text-decoration: none; color: #2b1e12;
+      background: linear-gradient(135deg, #ffe0ae, #ffc978);
+      border: 1px solid rgba(255,226,176,0.95);
+      border-radius: 8px; padding: 8px 13px;
+      font-weight: 700; font-size: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+      display: inline-block;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.42); }
+    .btn.ghost { background: rgba(255,216,153,0.1); color: #ffd9a0; border-color: rgba(255,216,153,0.32); box-shadow: none; }
+    .btn.ghost:hover { background: rgba(255,216,153,0.18); }
+    .nav-hint { font-size: 12px; color: #7a6858; margin-top: 12px; }
   </style>
 </head>
 <body>
   <main class="card">
+    <div class="floor-nav" id="floor-nav"></div>
+
     <div class="floor-header">
       <div class="floor-badge" id="floor-badge"></div>
       <div>
@@ -313,205 +231,278 @@
     </div>
 
     <div class="key-quote" id="key-quote"></div>
-    <div class="gallery" id="gallery"></div>
-    <div class="media-grid" id="media-grid"></div>
-
-    <div class="fact-grid" id="fact-grid"></div>
+    <div id="content"></div>
 
     <div class="divider"></div>
-
     <div class="links-row">
       <a class="btn" href="index.html">Back to Homepage</a>
       <a class="btn ghost" href="page.html">About</a>
       <a class="btn ghost" href="summary.html">Summary</a>
-      <a class="btn ghost" href="organs.html">Harvested</a>
       <a class="btn ghost" href="work-cited.html">Sources</a>
     </div>
-    <p class="nav-hint">Use the floor buttons on the homepage or press 1, 2, or 3 to switch class levels.</p>
+    <p class="nav-hint">Use the floor buttons above or return to the homepage to switch class levels.</p>
   </main>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
+    const params  = new URLSearchParams(window.location.search);
     const floorId = params.get("floor") || "2";
 
     const floorData = {
       "1": {
         name: "Low Class",
-        theme: "Access Denied — Predetermined Fate",
+        theme: "Access Denied: Predetermined Fate",
         badge: "↓",
-        badgeStyle: "background: rgba(200,50,50,0.22); color: #ff7a7a; border: 1px solid rgba(200,50,50,0.4);",
-        keyQuote: "\"Without opportunities for creative expression or critical thinking, they are treated as disposable — never shown to have individuality beyond a predetermined biological role.\"",
-        mediaPrompt: "Suggested media: stills of bleak donor facilities, education inequality chart (Pew), underfunded school visuals, and one quote card from APA/LPI findings.",
-        media: {
-          stats: [
-            { value: "11%", label: "Lowest-income college completion" },
-            { value: "1/3", label: "States underfund high-poverty districts" },
-            { value: "17", label: "Daily U.S. deaths waiting for organs" },
-            { value: "100K+", label: "People waiting for transplants" }
-          ],
-          bars: [
-            { label: "School Funding", value: 28, color: "linear-gradient(90deg,#a01818,#ff7a7a)" },
-            { label: "Career Access", value: 32, color: "linear-gradient(90deg,#903020,#ffb07a)" },
-            { label: "Social Mobility", value: 24, color: "linear-gradient(90deg,#7a3030,#ff8f8f)" }
-          ],
-          compare: [
-            "Fiction: Donor clones are raised for extraction, not development.",
-            "Reality: Underfunded schools reduce upward mobility and long-term agency."
-          ],
-          photos: [
-            { src: "images/lowerclass/bleakhospital.png", caption: "Bleak donor facility" },
-            { src: "images/lowerclass/underfunded school.png", caption: "Underfunded school" },
-            { src: "images/lowerclass/chart.png", caption: "Education inequality chart" }
-          ]
-        },
-        facts: [
+        badgeStyle: "background:rgba(200,50,50,0.22);color:#ff7a7a;border:1px solid rgba(200,50,50,0.4);",
+        keyQuote: "\"Without opportunities for creative expression or critical thinking, they are treated as disposable, never shown to have individuality beyond a predetermined biological role.\"",
+        thesis: "When education is withheld entirely, those at the bottom are denied even the language to question the system that controls them.",
+        thesisStyle: "background:rgba(200,50,50,0.1);border-color:#ff7a7a;color:#ffb0a8;",
+        stats: [
+          { value: "11%",   label: "Lowest-income college completion" },
+          { value: "1/3",   label: "States underfund high-poverty districts" },
+          { value: "17",    label: "Daily U.S. deaths waiting for organs" },
+          { value: "100K+", label: "People waiting for transplants" }
+        ],
+        bars: [
+          { label: "School Funding", value: 28, color: "linear-gradient(90deg,#a01818,#ff7a7a)" },
+          { label: "Career Access",  value: 32, color: "linear-gradient(90deg,#903020,#ffb07a)" },
+          { label: "Social Mobility",value: 24, color: "linear-gradient(90deg,#7a3030,#ff8f8f)" }
+        ],
+        compare: [
+          "Fiction: Donor clones are raised for extraction, not development.",
+          "Reality: Underfunded schools reduce upward mobility and long-term agency."
+        ],
+        photos: [
+          { src: "images/lowerclass/bleakhospital.png",     alt: "Bleak donor facility" },
+          { src: "images/lowerclass/underfunded school.png",alt: "Underfunded school" },
+          { src: "images/lowerclass/chart.png",             alt: "Education inequality chart" }
+        ],
+        novelFacts: [
           "In Never Let Me Go, clones raised outside of Hailsham symbolize the lower social class: denied meaningful education, identity development, and any hope for an alternative future.",
           "Unlike Hailsham students who are encouraged to create art and reflect on their emotions, clones in other institutions are raised in stark, utilitarian environments focused solely on their function as organ donors.",
-          "Without access to creative expression or critical thinking, these clones are never equipped to question the system that exploits them — they remain compliant, accepting their fate without resistance.",
+          "Without access to creative expression or critical thinking, these clones are never equipped to question the system that exploits them. They remain compliant, accepting their fate without resistance."
+        ],
+        realFacts: [
           "The contrast with Hailsham reveals how even limited educational access can produce very different lived experiences, and how education functions as either empowerment or control depending on who gets to access it.",
           "This mirrors real-world inequality: underfunded schools deny students access to resources for intellectual and creative growth, reinforcing barriers to upward mobility before children even reach adulthood.",
-          "The lower-tier clones expose a society where withholding education preserves power and predetermines not only success, but a person's sense of self and worth.",
-          "Research shows that children from underprivileged backgrounds begin facing structural educational disadvantages before they are even born — a fact that echoes the clones' birth-determined social position (American Psychological Association, 2017)."
-        ]
+          "The lower-tier clones expose a society where withholding education preserves power and predetermines not only success, but a person's sense of self and worth."
+        ],
+        bridge: "Research shows that children from underprivileged backgrounds begin facing structural educational disadvantages before they are even born, a fact that echoes the clones' birth-determined social position (American Psychological Association, 2017)."
       },
       "2": {
         name: "Middle Class",
-        theme: "The Gilded Cage — Awareness Without Power",
+        theme: "The Gilded Cage: Awareness Without Power",
         badge: "↔",
-        badgeStyle: "background: rgba(255,214,102,0.15); color: #ffd666; border: 1px solid rgba(255,214,102,0.38);",
+        badgeStyle: "background:rgba(255,214,102,0.15);color:#ffd666;border:1px solid rgba(255,214,102,0.38);",
         keyQuote: "\"Hailsham masks dehumanization with culture and demonstrates how middle-tier positioning can produce not freedom, but painful awareness of systemic entrapment.\"",
-        mediaPrompt: "Suggested media: Hailsham art/classroom imagery, quote card on deferrals, visual comparing degree attainment vs debt burden, and one scene still emphasizing false hope.",
-        media: {
-          stats: [
-            { value: "79%", label: "Top-income completion vs lower tiers" },
-            { value: "4×", label: "Top quintile persistence (Brookings)" },
-            { value: "$42K", label: "Lower-middle median earnings" },
-            { value: "$68K", label: "Upper-middle median earnings" }
-          ],
-          bars: [
-            { label: "Education Access", value: 64, color: "linear-gradient(90deg,#2060c0,#77bcff)" },
-            { label: "Freedom to Choose", value: 45, color: "linear-gradient(90deg,#708020,#ffd666)" },
-            { label: "Debt Constraint", value: 71, color: "linear-gradient(90deg,#805020,#ffb45d)" }
-          ],
-          compare: [
-            "Fiction: Hailsham offers growth, but no structural escape.",
-            "Reality: Credentials increase options, but debt and labor structures limit mobility."
-          ],
-          photos: [
-            { src: "images/middleclass/hailsham.png", caption: "Hailsham art & classroom" },
-            { src: "images/middleclass/falsehope.png", caption: "False hope — deferrals scene" },
-            { src: "images/middleclass/quote.png", caption: "Key quote card" },
-            { src: "images/middleclass/graph.png", caption: "Degree attainment vs debt" }
-          ]
-        },
-        facts: [
-          "In Never Let Me Go, Hailsham clones serve as a compelling metaphor for the middle class — given access to art, writing, and reflection, but ultimately unable to escape their predetermined role as organ donors.",
+        thesis: "A better education does not guarantee freedom; it can just as easily produce more articulate compliance with the system that confines you.",
+        thesisStyle: "background:rgba(255,214,102,0.07);border-color:#ffd666;color:#ffe8b0;",
+        stats: [
+          { value: "79%",  label: "Top-income completion vs lower tiers" },
+          { value: "4x",   label: "Top quintile persistence (Brookings)" },
+          { value: "$42K", label: "Lower-middle median earnings" },
+          { value: "$68K", label: "Upper-middle median earnings" }
+        ],
+        bars: [
+          { label: "Education Access",  value: 64, color: "linear-gradient(90deg,#2060c0,#77bcff)" },
+          { label: "Freedom to Choose", value: 45, color: "linear-gradient(90deg,#708020,#ffd666)" },
+          { label: "Debt Constraint",   value: 71, color: "linear-gradient(90deg,#805020,#ffb45d)" }
+        ],
+        compare: [
+          "Fiction: Hailsham offers growth, but no structural escape.",
+          "Reality: Credentials increase options, but debt and labor structures limit mobility."
+        ],
+        photos: [
+          { src: "images/middleclass/hailsham.png",   alt: "Hailsham art and classroom" },
+          { src: "images/middleclass/falsehope.png",  alt: "False hope: deferrals scene" },
+          { src: "images/middleclass/quote.png",      alt: "Key quote card" },
+          { src: "images/middleclass/graph.png",      alt: "Degree attainment vs debt" }
+        ],
+        novelFacts: [
+          "In Never Let Me Go, Hailsham clones serve as a compelling metaphor for the middle class, given access to art, writing, and reflection, but ultimately unable to escape their predetermined role as organ donors.",
           "This creates a cruel irony: Hailsham students gain the self-awareness and language to understand what it means to be human, yet are never given the power to challenge the system that exploits them.",
-          "Their education functions less as liberation and more as pacification — keeping them intellectually engaged while conditioning them to remain compliant and fulfill expected social roles.",
+          "Their education functions less as liberation and more as pacification, keeping them intellectually engaged while conditioning them to remain compliant and fulfill expected social roles."
+        ],
+        realFacts: [
           "This dynamic parallels middle-class education in the real world, where students are directed toward higher education with promises of mobility, yet many become constrained by student debt and rigid workforce demands.",
           "Hailsham also illustrates how a slight educational advantage can create a false sense of exceptionalism. Rumors of 'deferrals for true love' mirror how middle-class aspirations maintain hope without changing structural reality.",
-          "Snaza (2015) argues that humanizing education — education that acknowledges full selfhood — ultimately fails at Hailsham because it cannot overcome structural conditions that have already determined the clones' social function.",
-          "The middle class, like Hailsham's clones, may have more opportunity than those below — but still faces structural barriers that prevent full access to the wealth, choice, and power held by those above."
-        ]
+          "Snaza (2015) argues that humanizing education, defined as education that acknowledges full selfhood, ultimately fails at Hailsham because it cannot overcome structural conditions that have already determined the clones' social function."
+        ],
+        bridge: "The middle class, like Hailsham's clones, may have more opportunity than those below, but still faces structural barriers that prevent full access to the wealth, choice, and power held by those above."
       },
       "3": {
         name: "Upper Class",
-        theme: "Privilege &amp; Complacency — Choice as Default",
+        theme: "Privilege and Complacency: Choice as Default",
         badge: "↑",
-        badgeStyle: "background: rgba(119,188,255,0.15); color: #77bcff; border: 1px solid rgba(119,188,255,0.38);",
-        keyQuote: "\"They may not be overtly malicious, but they remain apathetic — because they benefit from the system, and have more to lose from reform than from silence.\"",
-        mediaPrompt: "Suggested media: polished hospital/elite-life imagery, beneficiaries vs donors comparison graphic, and social mobility chart showing class persistence.",
-        media: {
-          stats: [
-            { value: "93", label: "High-income life expectancy index" },
-            { value: "$115K", label: "High-income median earnings" },
-            { value: "4×", label: "Likelihood of staying top quintile" },
-            { value: "90+", label: "Housing/health security index" }
-          ],
-          bars: [
-            { label: "Choice Autonomy", value: 92, color: "linear-gradient(90deg,#2060c0,#77bcff)" },
-            { label: "Resource Access", value: 95, color: "linear-gradient(90deg,#208040,#80e890)" },
-            { label: "System Incentive", value: 88, color: "linear-gradient(90deg,#805020,#ffd666)" }
-          ],
-          compare: [
-            "Fiction: Ordinary humans benefit from donor structures without personal cost.",
-            "Reality: Elite educational pipelines and inherited capital preserve class position."
-          ],
-          photos: [
-            { src: "images/upperclasss/polishedhospital.png", caption: "Polished hospital / elite life" },
-            { src: "images/upperclasss/chart.png", caption: "Beneficiaries vs donors" },
-            { src: "images/upperclasss/graph.png", caption: "Social mobility — class persistence" }
-          ]
-        },
-        facts: [
-          "Within Never Let Me Go, 'ordinary' humans represent the upper class: treated as fully autonomous people, free to choose their life paths, and direct beneficiaries of the clone system — receiving organs when necessary.",
+        badgeStyle: "background:rgba(119,188,255,0.15);color:#77bcff;border:1px solid rgba(119,188,255,0.38);",
+        keyQuote: "\"They may not be overtly malicious, but they remain apathetic, because they benefit from the system and have more to lose from reform than from silence.\"",
+        thesis: "The most powerful force in maintaining inequality is not cruelty at the top, but the comfort of those who benefit from it and never have to question it.",
+        thesisStyle: "background:rgba(119,188,255,0.08);border-color:#77bcff;color:#b8d8f8;",
+        stats: [
+          { value: "93",    label: "High-income life expectancy index" },
+          { value: "$115K", label: "High-income median earnings" },
+          { value: "4x",    label: "Likelihood of staying top quintile" },
+          { value: "90+",   label: "Housing/health security index" }
+        ],
+        bars: [
+          { label: "Choice Autonomy", value: 92, color: "linear-gradient(90deg,#2060c0,#77bcff)" },
+          { label: "Resource Access", value: 95, color: "linear-gradient(90deg,#208040,#80e890)" },
+          { label: "System Incentive",value: 88, color: "linear-gradient(90deg,#805020,#ffd666)" }
+        ],
+        compare: [
+          "Fiction: Ordinary humans benefit from donor structures without personal cost.",
+          "Reality: Elite educational pipelines and inherited capital preserve class position."
+        ],
+        photos: [
+          { src: "images/upperclasss/polishedhospital.png", alt: "Polished hospital and elite life" },
+          { src: "images/upperclasss/chart.png",            alt: "Beneficiaries vs donors" },
+          { src: "images/upperclasss/graph.png",            alt: "Social mobility: class persistence" }
+        ],
+        novelFacts: [
+          "Within Never Let Me Go, 'ordinary' humans represent the upper class: treated as fully autonomous people, free to choose their life paths, and direct beneficiaries of the clone system, receiving organs when necessary.",
           "This stands in direct contrast to the clones, whose futures are largely predetermined. Even Hailsham clones, despite better treatment, remain confined to the same narrow social roles of caretaker or organ donor.",
+          "The general complacency of ordinary humans parallels upper-class complacency, aware of the system's broad structure but unmotivated to dismantle it, since they are its primary beneficiaries."
+        ],
+        realFacts: [
           "This dynamic reflects upper-class advantage in real-world education: wealthier families access stronger educational opportunities, which compounds over time to expand life outcomes and social mobility across generations.",
-          "The general complacency of ordinary humans parallels upper-class complacency — aware of the system's broad structure but unmotivated to dismantle it, since they are its primary beneficiaries.",
-          "Research shows children born into the top income quintile are four times more likely to remain there than to fall to the bottom — structural advantage reproduces itself through inherited networks, school quality, and social capital (Brookings Institution).",
-          "The upper class in the novel is not depicted as cartoonishly evil — just unconcerned. This subtlety is the point: systems of inequality do not require active cruelty to persist, only passive acceptance from those who gain from them.",
-          "Ultimately, ordinary humans' small narrative role reinforces the novel's central argument: rigid social structures are maintained not by visible oppression alone, but by the unexamined comfort of those at the top."
-        ]
+          "Research shows children born into the top income quintile are four times more likely to remain there than to fall to the bottom. Structural advantage reproduces itself through inherited networks, school quality, and social capital (Brookings Institution).",
+          "The upper class in the novel is not depicted as cartoonishly evil, just unconcerned. This subtlety is the point: systems of inequality do not require active cruelty to persist, only passive acceptance from those who gain from them."
+        ],
+        bridge: "Ultimately, ordinary humans' small narrative role reinforces the novel's central argument: rigid social structures are maintained not by visible oppression alone, but by the unexamined comfort of those at the top."
       }
     };
 
-    const titleEl = document.getElementById("floor-title");
-    const subtitleEl = document.getElementById("floor-subtitle");
-    const badgeEl = document.getElementById("floor-badge");
-    const keyQuoteEl = document.getElementById("key-quote");
-    const mediaGridEl = document.getElementById("media-grid");
-    const galleryEl = document.getElementById("gallery");
-    const factGrid = document.getElementById("fact-grid");
+    // Build floor nav
+    [
+      { id: "1", label: "Low Class" },
+      { id: "2", label: "Middle Class" },
+      { id: "3", label: "Upper Class" }
+    ].forEach(f => {
+      const a = document.createElement("a");
+      a.className = "floor-nav-btn" + (f.id === floorId ? " active" : "");
+      a.href = "wall.html?floor=" + f.id;
+      a.textContent = f.label;
+      document.getElementById("floor-nav").appendChild(a);
+    });
+
+    function makeLabel(cls, text) {
+      const el = document.createElement("div");
+      el.className = "section-label " + cls;
+      el.textContent = text;
+      return el;
+    }
+
+    function makeFact(text, cls, delay) {
+      const el = document.createElement("div");
+      el.className = "fact-card " + cls;
+      el.textContent = text;
+      setTimeout(() => el.classList.add("visible"), delay);
+      return el;
+    }
+
+    function makePhotos(photos) {
+      const wrap = document.createElement("div");
+      wrap.className = "inline-photos " + (photos.length > 1 ? "two" : "one");
+      photos.forEach(p => {
+        const box = document.createElement("div");
+        box.className = "photo";
+        const img = document.createElement("img");
+        img.src = encodeURI(p.src);
+        img.alt = p.alt;
+        img.loading = "lazy";
+        box.appendChild(img);
+        wrap.appendChild(box);
+      });
+      return wrap;
+    }
+
+    function makeStats(stats) {
+      const row = document.createElement("div");
+      row.className = "stats-row";
+      row.innerHTML = stats.map(s =>
+        "<div class='stat-chip'><span class='value'>" + s.value + "</span><span class='label'>" + s.label + "</span></div>"
+      ).join("");
+      return row;
+    }
+
+    function makeBars(bars) {
+      const card = document.createElement("div");
+      card.className = "bars-card";
+      card.innerHTML =
+        "<p class='media-title'>Class Impact</p><div class='bar-wrap'>" +
+        bars.map(b =>
+          "<div class='bar-line'><span class='bar-label'>" + b.label + "</span>" +
+          "<div class='bar-track'><div class='bar-fill' data-value='" + b.value + "' style='background:" + b.color + ";'>" + b.value + "%</div></div></div>"
+        ).join("") + "</div>";
+      return card;
+    }
+
+    function makeCompare(items) {
+      const stack = document.createElement("div");
+      stack.className = "compare-stack";
+      stack.innerHTML = items.map(c => "<div class='compare-item'>" + c + "</div>").join("");
+      return stack;
+    }
 
     function loadFloor() {
       const floor = floorData[floorId];
-      if (!floor) {
-        titleEl.textContent = "Floor Not Found";
-        subtitleEl.textContent = "Choose a valid class from the homepage.";
-        factGrid.innerHTML = "<p>No details available.</p>";
-        return;
-      }
+      if (!floor) return;
 
-      titleEl.textContent = floor.name + " — Wall";
-      subtitleEl.textContent = floor.theme;
-      badgeEl.style.cssText = floor.badgeStyle;
-      badgeEl.textContent = floor.badge;
-      keyQuoteEl.textContent = floor.keyQuote;
-      mediaGridEl.innerHTML =
-        "<section class='media-card'>" +
-          "<p class='media-title'>Key Indicators</p>" +
-          "<div class='stat-row'>" +
-            floor.media.stats.map((s) =>
-              "<div class='stat-chip'><span class='value'>" + s.value + "</span><span class='label'>" + s.label + "</span></div>"
-            ).join("") +
-          "</div>" +
-        "</section>" +
-        "<section class='media-card'>" +
-          "<p class='media-title'>Class Impact Graph</p>" +
-          "<div class='bar-wrap'>" +
-            floor.media.bars.map((b) =>
-              "<div class='bar-line'><span class='bar-label'>" + b.label + "</span><div class='bar-track'><div class='bar-fill' style='width:" + b.value + "%;background:" + b.color + ";'>" + b.value + "%</div></div></div>"
-            ).join("") +
-          "</div>" +
-          "<div class='compare-stack' style='margin-top:10px;'>" +
-            floor.media.compare.map((c) => "<div class='compare-item'>" + c + "</div>").join("") +
-          "</div>" +
-        "</section>";
+      document.title = floor.name + ": Made For Failure";
+      document.getElementById("floor-title").textContent = floor.name + " Wall";
+      document.getElementById("floor-subtitle").textContent = floor.theme;
+      const badge = document.getElementById("floor-badge");
+      badge.style.cssText = floor.badgeStyle;
+      badge.textContent = floor.badge;
+      document.getElementById("key-quote").textContent = floor.keyQuote;
 
-      const photos = (floor.media && floor.media.photos) || [];
-      galleryEl.innerHTML = photos.map((p) =>
-        "<div class='photo'><img src='" + encodeURI(p.src) + "' alt='" + p.caption + "' loading='lazy'></div>"
-      ).join("");
-      galleryEl.style.display = photos.length ? "grid" : "none";
+      const content = document.getElementById("content");
+      content.innerHTML = "";
 
-      factGrid.innerHTML = "";
-      floor.facts.forEach((fact, idx) => {
-        const card = document.createElement("div");
-        card.className = "fact-card";
-        card.innerHTML = "<span class='fact-text'>" + fact + "</span>";
-        factGrid.appendChild(card);
-        setTimeout(() => card.classList.add("visible"), 80 * (idx + 1));
-      });
+      const p = floor.photos;
+      // photos[0] alone after novel fact 1 (or pair [0,1] for 4-photo floors)
+      const firstGroup  = p.length >= 4 ? [p[0], p[1]] : [p[0]];
+      // remaining photos split across reality section
+      const midPhoto    = p.length >= 4 ? p[2] : p[1];
+      const lastPhoto   = p.length >= 4 ? p[3]  : p[2];
+
+      let factDelay = 80;
+
+      // ---- In the Novel ----
+      content.appendChild(makeLabel("novel-label", "In the Novel"));
+      content.appendChild(makeFact(floor.novelFacts[0], "novel-card", factDelay)); factDelay += 80;
+      if (firstGroup.length) content.appendChild(makePhotos(firstGroup));
+      content.appendChild(makeFact(floor.novelFacts[1], "novel-card", factDelay)); factDelay += 80;
+      content.appendChild(makeFact(floor.novelFacts[2], "novel-card", factDelay)); factDelay += 80;
+
+      // Thesis
+      const thesis = document.createElement("div");
+      thesis.className = "thesis-block";
+      thesis.textContent = floor.thesis;
+      thesis.style.cssText = floor.thesisStyle;
+      content.appendChild(thesis);
+
+      // ---- In the Real World ----
+      content.appendChild(makeLabel("reality-label", "In the Real World"));
+      content.appendChild(makeStats(floor.stats));
+      content.appendChild(makeFact(floor.realFacts[0], "reality-card", factDelay)); factDelay += 80;
+      content.appendChild(makeBars(floor.bars));
+      content.appendChild(makeFact(floor.realFacts[1], "reality-card", factDelay)); factDelay += 80;
+      if (midPhoto) content.appendChild(makePhotos([midPhoto]));
+      content.appendChild(makeFact(floor.realFacts[2], "reality-card", factDelay)); factDelay += 80;
+      content.appendChild(makeCompare(floor.compare));
+      if (lastPhoto) content.appendChild(makePhotos([lastPhoto]));
+
+      // ---- The Takeaway ----
+      content.appendChild(makeLabel("bridge-label", "The Takeaway"));
+      const bridge = document.createElement("div");
+      bridge.className = "fact-bridge";
+      bridge.textContent = floor.bridge;
+      content.appendChild(bridge);
+
+      // Animate bars
+      setTimeout(() => {
+        document.querySelectorAll(".bar-fill").forEach(b => { b.style.width = b.dataset.value + "%"; });
+      }, 200);
     }
 
     loadFloor();
